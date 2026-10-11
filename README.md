@@ -2,11 +2,11 @@
   <img src="docs/icon.png" width="160" alt="ClipBar, a clipboard manager for macOS">
 </p>
 
-<h1 align="center">ClipBar: Clipboard Manager for macOS</h1>
+<h1 align="center">ClipBar: Clipboard Manager for macOS That Never Loses What You Type</h1>
 
 <p align="center">
   <b>A free, open-source clipboard history for the Mac menu bar, built with SwiftUI and Liquid Glass.</b><br>
-  Locked items behind Touch ID · automatic screenshots · text recognition in images · instant paste
+  <b>Drafts: recover text you typed and lost</b> · Touch ID–locked items · automatic screenshots · OCR search · instant paste
 </p>
 
 <p align="center">
@@ -20,6 +20,7 @@
 
 <p align="center">
   <a href="https://github.com/SajjadMohabati/clipbar-mac/releases/latest"><b>⬇️ Download ClipBar</b></a>
+  &nbsp;·&nbsp; <a href="#drafts-never-lose-what-you-typed-again">Drafts</a>
   &nbsp;·&nbsp; <a href="#features">Features</a>
   &nbsp;·&nbsp; <a href="#keyboard-shortcuts">Shortcuts</a>
   &nbsp;·&nbsp; <a href="#faq">FAQ</a>
@@ -35,14 +36,53 @@
 
 ---
 
+## Drafts: never lose what you typed again
+
+You write a long message, press Send, and it's gone. The form reloaded, the session expired, the
+app crashed, the upload failed, or you closed the tab by mistake. Nobody wants to type it all again.
+
+**ClipBar Drafts saves what you type while you type it**, in any app, even if you never copied it.
+When the text disappears, open ClipBar, go to the **Drafts** tab and paste it back.
+
+| What went wrong | What ClipBar does |
+| --- | --- |
+| A web form reset or the page reloaded | Your text is in Drafts |
+| "Message failed to send" and the box is empty | Your text is in Drafts |
+| You closed the tab or the app quit | Your text is in Drafts |
+| A site rejected your post and cleared the field | Your text is in Drafts |
+| You selected everything and overwrote it by accident | The earlier version is in Drafts |
+
+**How it works**
+
+1. Turn it on once in **Settings → Drafts**.
+2. Type anywhere: chat apps, email, browsers, forms, notes.
+3. ClipBar keeps **one draft per message**. It updates as you type, and when the field is emptied (sent, cleared or wiped) the full text stays in Drafts.
+4. Lost something? Press `⇧⌘V`, open **Drafts**, press `↩`. It's pasted back where you were typing.
+
+**You stay in control**
+
+- **Minimum length** (default 30 characters), so searches and short replies aren't kept.
+- **How long** drafts are kept (default 12 hours, from 1 hour to 7 days).
+- **How many** drafts are kept (default 10, up to 50).
+- Move a draft to **Saved** with `⌘S` to keep it for good.
+
+**Private and safe**
+
+- It is **not a keylogger**. ClipBar never listens to your keyboard. Once a second it asks macOS (Accessibility) for the text of the field you're typing in.
+- **Password fields are never read.** Terminals, password managers and search fields are skipped, and card numbers and API keys are filtered out.
+- **Off by default**, and everything stays on your Mac. Nothing is uploaded.
+- Works with left-to-right and right-to-left text (Persian, Arabic, Hebrew).
+
+<sub>Works in most Mac apps and browsers. A few apps don't share their text fields with macOS, so their text can't be saved.</sub>
+
 ## Why ClipBar?
 
 Most clipboard managers stop at "remember what I copied". ClipBar also keeps your **sensitive data
 locked**, **catches every screenshot**, **reads the text inside images** and **pastes straight into the
 app you were using**, while looking like it shipped with macOS Tahoe.
 
+- 📝 **Never lose a typed message again.** [Drafts](#drafts-never-lose-what-you-typed-again) keeps a copy of what you type in other apps, so a failed send, a reset form or a closed tab doesn't cost you your text.
 - 🔐 **Touch ID–locked items.** Card numbers, IDs and passwords are kept in the macOS Keychain, not in a plain file, and every paste, copy, edit or delete asks for Touch ID or your Mac password.
-- 📝 **Never lose a typed message again.** Drafts keeps a copy of what you type in other apps, so a failed send or a reset form doesn't cost you your text.
 - 📸 **Screenshots go straight into your history.** Press ⇧⌘3 or ⇧⌘4 and the screenshot is on the clipboard and in ClipBar, ready to paste. No extra step.
 - 🔎 **Search inside images.** Text in copied images and screenshots is recognized on-device, so you can find a screenshot by what's written in it.
 - ⚡️ **Paste where you were typing.** Pick an item with `↩` and ClipBar pastes it into the focused text field of the previous app. `⌘1`–`⌘9` paste the first nine items instantly.
@@ -183,6 +223,30 @@ CLIPBAR_SIGN_IDENTITY="ClipBar Local" ./build.sh install
 ## FAQ
 
 <details>
+<summary><b>How do I recover text I typed that disappeared on my Mac?</b></summary>
+
+Turn on **Drafts** in ClipBar's settings. From then on ClipBar keeps a copy of longer text while you
+type it in other apps. If a form resets, a message fails to send or a tab closes, open ClipBar,
+switch to the **Drafts** tab and paste the text back. Text typed before you turned Drafts on can't
+be recovered.
+</details>
+
+<details>
+<summary><b>Is Drafts a keylogger? Is it safe?</b></summary>
+
+No. ClipBar never records keystrokes. It reads the text of the focused text field through the macOS
+Accessibility API once a second, never reads password fields, skips terminals and password managers,
+and stores drafts only on your Mac for a limited time. It's off until you turn it on.
+</details>
+
+<details>
+<summary><b>Which apps does Drafts work in?</b></summary>
+
+Most native Mac apps, browsers such as Safari and Chrome, and most chat and email apps. A few apps
+don't expose their text fields to macOS, and in those ClipBar can't see what you type.
+</details>
+
+<details>
 <summary><b>Is ClipBar free?</b></summary>
 
 Yes. ClipBar is free and open source under the MIT license, with no subscription, account or in-app purchase.
@@ -270,4 +334,4 @@ Created by **Sajjad Mohabati** · [github.com/SajjadMohabati](https://github.com
 
 [MIT](LICENSE) © Sajjad Mohabati
 
-<sub>Keywords: clipboard manager for Mac, clipboard history macOS, menu bar clipboard app, macOS Tahoe clipboard, Liquid Glass app, free clipboard manager, open source clipboard manager, copy paste history Mac, Touch ID clipboard, screenshot to clipboard, OCR clipboard, SwiftUI menu bar app.</sub>
+<sub>Keywords: recover lost typed text on Mac, restore unsent message, form text recovery, autosave what you type, typing history Mac, draft autosave, lost text recovery macOS, clipboard manager for Mac, clipboard history macOS, menu bar clipboard app, macOS Tahoe clipboard, Liquid Glass app, free clipboard manager, open source clipboard manager, copy paste history Mac, Touch ID clipboard, screenshot to clipboard, OCR clipboard, SwiftUI menu bar app.</sub>
