@@ -75,10 +75,15 @@ final class DraftWatcher {
         guard let role = string(kAXRoleAttribute, of: element), Self.textRoles.contains(role),
               string(kAXSubroleAttribute, of: element) != kAXSecureTextFieldSubrole as String,
               string(kAXSubroleAttribute, of: element) != kAXSearchFieldSubrole as String,
-              let text = string(kAXValueAttribute, of: element),
-              text.utf16.count <= Self.maxLength else { return forget() }
+              let text = text(of: element) else { return forget() }
 
         guard let field, CFEqual(field, element) else {
+            // Web and Electron apps hand out a new element for the same field now and then;
+            // if the text carries on from what was there, it's still the same message.
+            if !last.isEmpty, text.continues(last) {
+                field = element
+                return
+            }
             // A different field: whatever is already in it isn't something being typed now.
             forget()
             field = element
@@ -110,6 +115,26 @@ final class DraftWatcher {
         return (value as! AXUIElement)
     }
 
+    /// The field's text in typing order. Chromium's `AXValue` returns right-to-left lines with
+    /// their runs in visual order, so the range API, which doesn't, is asked first.
+    private func text(of element: AXUIElement) -> String? {
+        var count: CFTypeRef?
+        if AXUIElementCopyAttributeValue(element, kAXNumberOfCharactersAttribute as CFString, &count) == .success,
+           let length = count as? Int {
+            guard length <= Self.maxLength else { return nil }
+            var range = CFRange(location: 0, length: length)
+            var value: CFTypeRef?
+            if length > 0, let range = AXValueCreate(.cfRange, &range),
+               AXUIElementCopyParameterizedAttributeValue(
+                   element, kAXStringForRangeParameterizedAttribute as CFString, range, &value
+               ) == .success, let text = value as? String {
+                return text
+            }
+        }
+        guard let text = string(kAXValueAttribute, of: element), text.utf16.count <= Self.maxLength else { return nil }
+        return text
+    }
+
     private func string(_ attribute: String, of element: AXUIElement) -> String? {
         var value: CFTypeRef?
         guard AXUIElementCopyAttributeValue(element, attribute as CFString, &value) == .success else { return nil }
@@ -127,5 +152,14 @@ final class DraftWatcher {
         if Self.chromiumApps.contains(bundleID) {
             AXUIElementSetAttributeValue(element, "AXEnhancedUserInterface" as CFString, kCFBooleanTrue)
         }
+    }
+}
+
+extension String {
+    /// Whether this text is `earlier` with more typed or edited: they share most of their beginning.
+    func continues(_ earlier: String) -> Bool {
+        let shorter = Swift.min(count, earlier.count)
+        guard shorter > 0 else { return false }
+        return commonPrefix(with: earlier).count * 10 >= shorter * 7
     }
 }

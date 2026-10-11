@@ -368,9 +368,12 @@ final class ClipStore: ObservableObject {
     /// Creates or updates the draft of the text field being typed in, and returns its id.
     func recordDraft(_ id: UUID?, text: String, source: String?) -> UUID {
         var list = drafts
-        // The same text typed again (or a field revisited) reuses its draft.
-        let index = list.firstIndex { $0.id == id } ?? list.firstIndex { $0.text == text }
+        // A field revisited, or the same message picked up again, carries on in its draft.
+        let index = list.firstIndex { $0.id == id }
+            ?? list.firstIndex { $0.source == source && text.continues($0.text) }
         var draft = index.map { list.remove(at: $0) } ?? ClipItem()
+        // Earlier pieces of this same message are no longer needed.
+        list.removeAll { $0.source == source && text.continues($0.text) }
         draft.text = text
         draft.source = source
         draft.date = .now

@@ -156,6 +156,8 @@ struct EditorView: View {
                 .font(.system(size: 14))
                 .lineSpacing(4)
                 .scrollContentBackground(.hidden)
+                // Persian, Arabic and Hebrew text reads from the right edge.
+                .environment(\.layoutDirection, draft.isRightToLeft ? .rightToLeft : .leftToRight)
                 .padding(.horizontal, 18)
                 .padding(.vertical, 14)
                 .background(Color(nsColor: .textBackgroundColor))
@@ -575,5 +577,18 @@ private struct ColorInspector: View {
             ? "rgba(\(byte(r)), \(byte(g)), \(byte(b)), \(String(format: "%.2f", a)))"
             : "rgb(\(byte(r)), \(byte(g)), \(byte(b)))"
         return [("HEX", hex), ("RGB", rgb), ("HSL", hsl)]
+    }
+}
+
+extension String {
+    /// Whether the first letter belongs to a right-to-left script.
+    var isRightToLeft: Bool {
+        for scalar in unicodeScalars.prefix(400) where scalar.properties.isAlphabetic {
+            switch scalar.value {
+            case 0x0590...0x08FF, 0xFB1D...0xFDFF, 0xFE70...0xFEFF: return true
+            default: return false
+            }
+        }
+        return false
     }
 }
