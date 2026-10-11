@@ -19,6 +19,7 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
     private var previousApp: NSRunningApplication?
     private var observers: Set<AnyCancellable> = []
     private var askedForAccessibility = false
+    private lazy var draftWatcher = DraftWatcher(store: store)
     private lazy var screenshots = ScreenshotWatcher { [weak self] url in
         guard let self else { return }
         store.addScreenshot(at: url, copyToClipboard: settings.copyScreenshots)
@@ -35,6 +36,10 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
         settings.objectWillChange
             .receive(on: RunLoop.main)
             .sink { [weak self] _ in self?.store.applyLimits() }
+            .store(in: &observers)
+        settings.$draftsEnabled
+            .removeDuplicates()
+            .sink { [weak self] on in on ? self?.draftWatcher.start() : self?.draftWatcher.stop() }
             .store(in: &observers)
         settings.$captureScreenshots
             .removeDuplicates()
@@ -198,6 +203,13 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
         }
     }
 
+    /// ⌘[ and ⌘] step through History, Drafts (when turned on) and Saved.
+    private func switchMode(by delta: Int) {
+        let modes: [ClipStore.Mode] = settings.draftsEnabled ? [.history, .drafts, .saved] : [.history, .saved]
+        let index = (modes.firstIndex(of: store.mode) ?? 0) + delta
+        withAnimation(.glass) { store.mode = modes[min(max(index, 0), modes.count - 1)] }
+    }
+
     private func handleKey(_ event: NSEvent) -> NSEvent? {
         guard panel.isKeyWindow else { return event }
         let flags = event.modifierFlags.intersection([.command, .option, .control, .shift])
@@ -217,10 +229,10 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
             if store.query.isEmpty { hide() } else { store.query = "" }
         case (kVK_Tab, []) where store.mode == .history: store.cycleFilter(by: 1)
         case (kVK_Tab, .shift) where store.mode == .history: store.cycleFilter(by: -1)
-        case (kVK_ANSI_LeftBracket, .command): store.mode = .history
-        case (kVK_ANSI_RightBracket, .command): store.mode = .saved
+        case (kVK_ANSI_LeftBracket, .command): switchMode(by: -1)
+        case (kVK_ANSI_RightBracket, .command): switchMode(by: 1)
         case (kVK_Delete, .command): withSelection(store.remove)
-        case (kVK_ANSI_S, .command) where store.mode == .history: withSelection(store.save)
+        case (kVK_ANSI_S, .command) where store.mode != .saved: withSelection(store.save)
         case (kVK_ANSI_P, .command) where store.mode == .history: withSelection { item in withAnimation(.glass) { store.togglePin(item) } }
         case (kVK_ANSI_E, .command): withSelection(showEditor)
         case (kVK_ANSI_Comma, .command): openSettings()

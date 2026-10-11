@@ -96,10 +96,12 @@ struct EditorView: View {
                     .help("Move to History")
                 }
             } else {
-                Button { store.togglePin(item) } label: {
-                    Label(item.pinned ? "Unpin" : "Pin", systemImage: item.pinned ? "pin.slash" : "pin")
+                if !store.isDraft(item) {
+                    Button { store.togglePin(item) } label: {
+                        Label(item.pinned ? "Unpin" : "Pin", systemImage: item.pinned ? "pin.slash" : "pin")
+                    }
+                    .help(item.pinned ? "Unpin" : "Pin")
                 }
-                .help(item.pinned ? "Unpin" : "Pin")
                 Button { store.save(item) } label: {
                     Label("Move to Saved", systemImage: "bookmark")
                 }

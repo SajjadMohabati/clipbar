@@ -42,6 +42,7 @@ locked**, **catches every screenshot**, **reads the text inside images** and **p
 app you were using**, while looking like it shipped with macOS Tahoe.
 
 - 🔐 **Touch ID–locked items.** Card numbers, IDs and passwords are kept in the macOS Keychain, not in a plain file, and every paste, copy, edit or delete asks for Touch ID or your Mac password.
+- 📝 **Never lose a typed message again.** Drafts keeps a copy of what you type in other apps, so a failed send or a reset form doesn't cost you your text.
 - 📸 **Screenshots go straight into your history.** Press ⇧⌘3 or ⇧⌘4 and the screenshot is on the clipboard and in ClipBar, ready to paste. No extra step.
 - 🔎 **Search inside images.** Text in copied images and screenshots is recognized on-device, so you can find a screenshot by what's written in it.
 - ⚡️ **Paste where you were typing.** Pick an item with `↩` and ClipBar pastes it into the focused text field of the previous app. `⌘1`–`⌘9` paste the first nine items instantly.
@@ -66,6 +67,14 @@ app you were using**, while looking like it shipped with macOS Tahoe.
 - **Lock an item** and its value moves into the **macOS Keychain**. It is shown as `••••••••` and needs **Touch ID or your password** to paste, copy, view, edit or delete.
 - After unlocking, you have 30 seconds to do a few things without being asked again.
 - Locked values you paste are marked as *concealed*, so other clipboard tools don't record them.
+
+### Drafts: never lose what you typed
+- Turn on **Drafts** in Settings and ClipBar keeps a copy of longer text **while you type it in other apps**, even if you never copy it.
+- If a web form resets, a message fails to send or a tab closes, the text is waiting in the **Drafts** tab, ready to paste back.
+- One draft per text field: it updates as you type, and when the field is emptied (sent or cleared) the full text is kept and the next message becomes a new draft.
+- You choose the **minimum length** (30 characters by default), **how long** drafts are kept (12 hours) and **how many** (10). Limits are capped so it stays light.
+- Off by default. ClipBar reads the focused field through Accessibility once a second; it **never records keystrokes**, never reads password fields, and skips terminals and password managers.
+- Works in most apps and browsers; a few apps don't share their text fields with macOS.
 
 ### Screenshots and images
 - New screenshots (⇧⌘3, ⇧⌘4, ⇧⌘5) are **added to the history and copied to the clipboard** automatically.
@@ -98,7 +107,7 @@ app you were using**, while looking like it shipped with macOS Tahoe.
 
 ### Download (recommended)
 
-1. Download **`ClipBar-2.2.dmg`** from the [latest release](https://github.com/SajjadMohabati/clipbar-mac/releases/latest).
+1. Download **`ClipBar-<version>.dmg`** from the [latest release](https://github.com/SajjadMohabati/clipbar-mac/releases/latest).
 2. Open it and drag **ClipBar** onto **Applications**.
 
 <p align="center">
@@ -163,7 +172,7 @@ CLIPBAR_SIGN_IDENTITY="ClipBar Local" ./build.sh install
 | `⌥↩` | Copy without pasting |
 | `⌘1`–`⌘9` | Paste item 1–9 |
 | `⇥` / `⇧⇥` | Next / previous filter |
-| `⌘[` / `⌘]` | History / Saved |
+| `⌘[` / `⌘]` | Previous / next tab (History, Drafts, Saved) |
 | `⌘S` | Move to Saved |
 | `⌘P` | Pin or unpin |
 | `⌘E` | View and edit |
@@ -221,6 +230,7 @@ Everything lives in `~/Library/Application Support/ClipBar/`:
 
 - `history.json`: your clipboard history
 - `saved.json`: saved items (locked values are in the Keychain, never in this file)
+- `drafts.json`: drafts of text you typed, if you turned Drafts on
 - `Images/`: copied images, stored once as PNG files even if you copy them many times
 
 To start over, quit ClipBar and delete that folder.
@@ -237,6 +247,7 @@ Sources/ClipBar/
   Clipboard.swift          pasteboard I/O, secret detection, image storage, OCR
   Vault.swift              Keychain storage and Touch ID for locked items
   ScreenshotWatcher.swift  picks up new screenshots from the screenshot folder
+  DraftWatcher.swift       keeps drafts of text typed in other apps
   Transforms.swift         text transforms
   HotKey.swift             global shortcut
   Settings.swift           preferences

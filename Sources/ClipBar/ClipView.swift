@@ -25,12 +25,13 @@ struct ClipView: View {
     @State private var renaming: UUID?
 
     private var showingSaved: Bool { store.mode == .saved }
+    private var showingDrafts: Bool { store.mode == .drafts }
 
     var body: some View {
         VStack(spacing: 10) {
             header
             searchField
-            if !showingSaved { filterBar }
+            if store.mode == .history { filterBar }
             list
             if settings.autoPaste && !canPaste { accessBanner }
             footer
@@ -41,6 +42,9 @@ struct ClipView: View {
         .shadow(color: .black.opacity(0.12), radius: 2, y: 1)
         .shadow(color: .black.opacity(0.22), radius: 18, y: 10)
         .padding(Self.margin)
+        .onChange(of: settings.draftsEnabled) { _, on in
+            if !on && showingDrafts { store.mode = .history }
+        }
         .onChange(of: store.focusRequest, initial: true) {
             searchFocused = true
             confirmingClear = false
@@ -53,7 +57,7 @@ struct ClipView: View {
     private var header: some View {
         GlassEffectContainer(spacing: 12) {
             HStack(spacing: 8) {
-                ModeSwitch(mode: $store.mode)
+                ModeSwitch(mode: $store.mode, drafts: settings.draftsEnabled)
                     .fixedSize()
                     .layoutPriority(1)
                 if store.paused {
@@ -100,7 +104,7 @@ struct ClipView: View {
                 // Grows out of the trash button as a drop of red glass.
                 Button("Clear") {
                     withAnimation(.glass) {
-                        store.clear(includingPinned: false)
+                        if showingDrafts { store.clearDrafts() } else { store.clear(includingPinned: false) }
                         confirmingClear = false
                     }
                 }
@@ -110,9 +114,9 @@ struct ClipView: View {
                 .controlSize(.small)
                 .glassEffectID("confirm", in: glass)
                 .fixedSize()
-                .help("Delete everything except pinned items")
+                .help(showingDrafts ? "Delete every draft" : "Delete everything except pinned items")
             }
-            GlassIconButton(symbol: confirmingClear ? "xmark" : "trash", help: confirmingClear ? "Cancel" : "Clear history") {
+            GlassIconButton(symbol: confirmingClear ? "xmark" : "trash", help: confirmingClear ? "Cancel" : showingDrafts ? "Clear drafts" : "Clear history") {
                 withAnimation(.glass) { confirmingClear.toggle() }
             }
             .glassEffectID("action", in: glass)
@@ -123,7 +127,10 @@ struct ClipView: View {
             Image(systemName: "magnifyingglass")
                 .font(.system(size: 12, weight: .medium))
                 .foregroundStyle(.secondary)
-            TextField(showingSaved ? "Search saved items" : "Search clipboard history", text: $store.query)
+            TextField(
+                showingSaved ? "Search saved items" : showingDrafts ? "Search drafts" : "Search clipboard history",
+                text: $store.query
+            )
                 .textFieldStyle(.plain)
                 .font(.system(size: 13))
                 .focused($searchFocused)
@@ -226,7 +233,7 @@ struct ClipView: View {
 
     private func sectionTitle(at index: Int) -> String? {
         let items = store.visible
-        guard !showingSaved, store.filter == .all, items.first?.pinned == true else { return nil }
+        guard store.mode == .history, store.filter == .all, items.first?.pinned == true else { return nil }
         if index == 0 { return "Pinned" }
         return items[index - 1].pinned && !items[index].pinned ? "Recent" : nil
     }
@@ -237,6 +244,7 @@ struct ClipView: View {
             shortcut: index < 9 ? index + 1 : nil,
             selected: store.selection == item.id,
             saved: showingSaved,
+            pinnable: store.mode == .history,
             dropEdge: dropTarget?.id == item.id ? dropTarget?.edge : nil,
             onTap: { paste(item, true) },
             onPin: { withAnimation(.glass) { store.togglePin(item) } },
@@ -289,6 +297,9 @@ struct ClipView: View {
             if !item.isLocked {
                 Button("Move to History") { store.unsave(item) }
             }
+        } else if showingDrafts {
+            Button("Move to Saved") { store.save(item) }
+            Button("View and Edit…") { edit(item) }
         } else {
             Button("Move to Saved") { store.save(item) }
             Button(item.pinned ? "Unpin" : "Pin") { withAnimation(.glass) { store.togglePin(item) } }
@@ -318,6 +329,20 @@ struct ClipView: View {
                     .padding(.top, 4)
             }
             .frame(maxWidth: .infinity, maxHeight: .infinity)
+        } else if showingDrafts && store.query.isEmpty {
+            VStack(spacing: 10) {
+                Image(systemName: "square.and.pencil")
+                    .font(.system(size: 28, weight: .light))
+                    .foregroundStyle(.tertiary)
+                Text("No drafts")
+                    .font(.system(size: 13, weight: .medium))
+                    .foregroundStyle(.secondary)
+                Text("Longer text you type in other apps is kept here\nfor a while, in case it gets lost.")
+                    .font(.system(size: 11))
+                    .foregroundStyle(.tertiary)
+                    .multilineTextAlignment(.center)
+            }
+            .frame(maxWidth: .infinity, maxHeight: .infinity)
         } else {
             historyEmptyState
         }
@@ -333,7 +358,7 @@ struct ClipView: View {
             Text(searching ? "No matches for “\(store.query)”" : empty.title)
                 .font(.system(size: 13, weight: .medium))
                 .foregroundStyle(.secondary)
-            if store.items.isEmpty && !showingSaved {
+            if store.items.isEmpty && store.mode == .history {
                 Text("Copy something and it will show up here.")
                     .font(.system(size: 11))
                     .foregroundStyle(.tertiary)
@@ -401,9 +426,10 @@ struct ClipView: View {
     }
 
     private var countText: String {
-        let total = showingSaved ? store.saved.count : store.items.count
+        let total = showingSaved ? store.saved.count : showingDrafts ? store.drafts.count : store.items.count
         let shown = store.visible.count
         if shown != total { return "\(shown) of \(total)" }
+        if showingDrafts { return total == 1 ? "1 draft" : "\(total) drafts" }
         return total == 1 ? "1 item" : "\(total) items"
     }
 }
@@ -444,8 +470,8 @@ private struct ShortcutsButton: View {
         (["⌘", "1–9"], "Paste item 1–9"),
         (["↑", "↓"], "Move selection"),
         (["⇥"], "Next filter"),
-        (["⌘", "["], "History"),
-        (["⌘", "]"], "Saved items"),
+        (["⌘", "["], "Previous tab"),
+        (["⌘", "]"], "Next tab"),
         (["⌘", "S"], "Move to Saved"),
         (["⌘", "P"], "Pin or unpin"),
         (["⌘", "E"], "View and edit"),
@@ -483,6 +509,7 @@ struct ClipRow: View {
     let shortcut: Int?
     let selected: Bool
     var saved = false
+    var pinnable = true
     let dropEdge: VerticalEdge?
     let onTap: () -> Void
     let onPin: () -> Void
@@ -517,8 +544,10 @@ struct ClipRow: View {
             Spacer(minLength: 4)
             if hover {
                 HStack(spacing: 0) {
-                    if !saved {
+                    if pinnable {
                         IconButton(symbol: item.pinned ? "pin.slash" : "pin", help: item.pinned ? "Unpin" : "Pin", action: onPin)
+                    }
+                    if !saved {
                         IconButton(symbol: "bookmark", help: "Move to Saved (⌘S)", action: onSave)
                     }
                     if saved {
@@ -832,36 +861,48 @@ private struct RowDropDelegate: DropDelegate {
 
 // MARK: - Saved items
 
-/// History | Saved switch at the top of the panel.
+/// History | Drafts | Saved switch at the top of the panel.
+/// With three segments only the selected one shows its name, so they fit next to the header buttons.
 private struct ModeSwitch: View {
     @Binding var mode: ClipStore.Mode
+    let drafts: Bool
     @Namespace private var selection
 
     var body: some View {
         HStack(spacing: 2) {
-            segment(.history, title: "History", symbol: "clock")
-            segment(.saved, title: "Saved", symbol: "bookmark.fill")
+            segment(.history, title: "History", symbol: "clock", help: "Clipboard history")
+            if drafts {
+                segment(.drafts, title: "Drafts", symbol: "square.and.pencil", help: "Text you typed in other apps")
+            }
+            segment(.saved, title: "Saved", symbol: "bookmark.fill", help: "Saved items")
         }
         .padding(3)
         .background(Color.primary.opacity(0.06), in: .capsule)
     }
 
-    private func segment(_ value: ClipStore.Mode, title: String, symbol: String) -> some View {
+    private func segment(_ value: ClipStore.Mode, title: String, symbol: String, help: String) -> some View {
         let active = mode == value
         return Button {
             withAnimation(.glass) { mode = value }
         } label: {
-            Label(title, systemImage: symbol)
-                .font(.system(size: 12, weight: .semibold))
-                .lineLimit(1)
-                .foregroundStyle(active ? Color.primary : Color.secondary)
-                .padding(.horizontal, 11)
-                .padding(.vertical, 5)
-                .contentShape(.capsule)
-                .selectionGlass(active, id: "mode", in: selection)
+            HStack(spacing: 5) {
+                Image(systemName: symbol)
+                if active || !drafts {
+                    Text(title)
+                        .lineLimit(1)
+                        .fixedSize()
+                        .transition(.opacity)
+                }
+            }
+            .font(.system(size: 12, weight: .semibold))
+            .foregroundStyle(active ? Color.primary : Color.secondary)
+            .padding(.horizontal, 11)
+            .frame(height: 26)
+            .contentShape(.capsule)
+            .selectionGlass(active, id: "mode", in: selection)
         }
         .buttonStyle(.plain)
-        .help(value == .history ? "Clipboard history (⌘[)" : "Saved items (⌘])")
+        .help("\(help) (⌘[ / ⌘])")
     }
 }
 

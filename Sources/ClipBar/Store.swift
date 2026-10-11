@@ -79,6 +79,7 @@ enum Paths {
     static let images = directory(support.appending(path: "Images"))
     static let history = support.appending(path: "history.json")
     static let saved = support.appending(path: "saved.json")
+    static let drafts = support.appending(path: "drafts.json")
 
     private static func directory(_ url: URL) -> URL {
         try? FileManager.default.createDirectory(at: url, withIntermediateDirectories: true)
@@ -116,11 +117,13 @@ final class ClipStore: ObservableObject {
         }
     }
 
-    enum Mode { case history, saved }
+    enum Mode { case history, drafts, saved }
 
     @Published private(set) var items: [ClipItem] = [] { didSet { refresh() } }
     /// Things pasted again and again (card numbers, IDs…). Never cleaned up automatically.
     @Published private(set) var saved: [ClipItem] = [] { didSet { refresh() } }
+    /// Text typed into other apps, kept for a while in case it gets lost (see `DraftWatcher`).
+    @Published private(set) var drafts: [ClipItem] = [] { didSet { refresh() } }
     @Published var mode = Mode.history { didSet { refresh() } }
     @Published var query = "" { didSet { refresh() } }
     @Published var filter = Filter.all { didSet { refresh() } }
@@ -349,14 +352,35 @@ final class ClipStore: ObservableObject {
         return trimmed.isEmpty ? nil : trimmed
     }
 
-    /// Moves a history item into Saved.
+    /// Moves a history item or a draft into Saved.
     func save(_ item: ClipItem) {
-        guard let index = items.firstIndex(where: { $0.id == item.id }) else { return }
         var history = items
-        var moved = history.remove(at: index)
+        var typed = drafts
+        guard var moved = history.firstIndex(where: { $0.id == item.id }).map({ history.remove(at: $0) })
+                ?? typed.firstIndex(where: { $0.id == item.id }).map({ typed.remove(at: $0) }) else { return }
         moved.pinned = false
-        commit(items: history, saved: [moved] + saved)
+        commit(items: history, saved: [moved] + saved, drafts: typed)
         flash("Moved to Saved")
+    }
+
+    // MARK: - Drafts
+
+    /// Creates or updates the draft of the text field being typed in, and returns its id.
+    func recordDraft(_ id: UUID?, text: String, source: String?) -> UUID {
+        var list = drafts
+        // The same text typed again (or a field revisited) reuses its draft.
+        let index = list.firstIndex { $0.id == id } ?? list.firstIndex { $0.text == text }
+        var draft = index.map { list.remove(at: $0) } ?? ClipItem()
+        draft.text = text
+        draft.source = source
+        draft.date = .now
+        list.insert(draft, at: 0)
+        commit(drafts: list)
+        return draft.id
+    }
+
+    func clearDrafts() {
+        commit(drafts: [])
     }
 
     /// Moves a saved item back into the history.
@@ -371,6 +395,10 @@ final class ClipStore: ObservableObject {
         flash("Moved to History")
     }
 
+    func isDraft(_ item: ClipItem) -> Bool {
+        drafts.contains { $0.id == item.id }
+    }
+
     func isSaved(_ item: ClipItem) -> Bool {
         saved.contains { $0.id == item.id }
     }
@@ -380,7 +408,7 @@ final class ClipStore: ObservableObject {
     }
 
     private func item(where predicate: (ClipItem) -> Bool) -> ClipItem? {
-        items.first(where: predicate) ?? saved.first(where: predicate)
+        items.first(where: predicate) ?? saved.first(where: predicate) ?? drafts.first(where: predicate)
     }
 
     func clear(includingPinned: Bool) {
@@ -415,10 +443,6 @@ final class ClipStore: ObservableObject {
         selection = visible[min(max(index, 0), visible.count - 1)].id
     }
 
-    func toggleMode() {
-        mode = mode == .history ? .saved : .history
-    }
-
     func cycleFilter(by delta: Int) {
         let all = Filter.allCases
         let index = all.firstIndex(of: filter) ?? 0
@@ -427,7 +451,11 @@ final class ClipStore: ObservableObject {
 
     private func refresh() {
         let terms = query.split(whereSeparator: \.isWhitespace)
-        let source = mode == .history ? items.filter(filter.matches) : saved
+        let source = switch mode {
+        case .history: items.filter(filter.matches)
+        case .drafts: drafts
+        case .saved: saved
+        }
         visible = source.filter { item in
             terms.allSatisfy { item.text.localizedStandardContains($0) || item.title?.localizedStandardContains($0) == true }
         }
@@ -443,24 +471,46 @@ final class ClipStore: ObservableObject {
         commit(items: list)
     }
 
-    /// Applies a change to whichever list it affects (history and saved items alike).
+    /// Applies a change to whichever list it affects (history, saved items and drafts alike).
     private func change(_ body: (inout [ClipItem]) -> Void) {
         var history = items
         var kept = saved
+        var typed = drafts
         body(&history)
         body(&kept)
-        commit(items: history, saved: kept)
+        body(&typed)
+        commit(items: history, saved: kept, drafts: typed)
     }
 
-    private func commit(items newItems: [ClipItem]? = nil, saved newSaved: [ClipItem]? = nil) {
+    private func commit(
+        items newItems: [ClipItem]? = nil, saved newSaved: [ClipItem]? = nil, drafts newDrafts: [ClipItem]? = nil
+    ) {
         let history = pruned(newItems ?? items)
         let kept = newSaved ?? saved
-        guard history != items || kept != saved else { return }
+        let typed = prunedDrafts(newDrafts ?? drafts)
+        guard history != items || kept != saved || typed != drafts else { return }
+        // Typing updates a draft every second; don't rewrite the whole history for that.
+        guard history != items || kept != saved else {
+            drafts = typed
+            io.async {
+                if let data = try? JSONEncoder().encode(typed) {
+                    try? data.write(to: Paths.drafts, options: .atomic)
+                }
+            }
+            return
+        }
         let before = Set((items + saved).compactMap(\.image))
         let after = Set((history + kept).compactMap(\.image))
         items = history
         saved = kept
+        drafts = typed
         save(removingImages: before.subtracting(after))
+    }
+
+    /// Drafts are for rescuing lost text, not an archive: they expire and are few.
+    private func prunedDrafts(_ list: [ClipItem]) -> [ClipItem] {
+        let cutoff = Date.now.addingTimeInterval(-Double(settings.draftHours) * 3600)
+        return Array(list.filter { $0.date >= cutoff }.prefix(settings.draftCount))
     }
 
     private func pruned(_ list: [ClipItem]) -> [ClipItem] {
@@ -497,6 +547,10 @@ final class ClipStore: ObservableObject {
                 try? FileManager.default.moveItem(at: Paths.saved, to: Paths.support.appending(path: "saved.corrupt.json"))
             }
         }
+        if let data = try? Data(contentsOf: Paths.drafts),
+           let list = try? JSONDecoder().decode([ClipItem].self, from: data) {
+            drafts = prunedDrafts(list)
+        }
         guard let data = try? Data(contentsOf: Paths.history) else { return }
         guard var list = try? JSONDecoder().decode([ClipItem].self, from: data) else {
             // Keep the unreadable file around instead of overwriting it on the next save.
@@ -519,8 +573,12 @@ final class ClipStore: ObservableObject {
     private func save(removingImages removed: Set<String> = []) {
         let history = items
         let kept = saved
+        let typed = drafts
         io.async {
             ImageStore.delete(removed)
+            if let data = try? JSONEncoder().encode(typed) {
+                try? data.write(to: Paths.drafts, options: .atomic)
+            }
             if let data = try? JSONEncoder().encode(history) {
                 try? data.write(to: Paths.history, options: .atomic)
             }

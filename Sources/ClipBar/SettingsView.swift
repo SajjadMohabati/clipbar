@@ -4,7 +4,7 @@ import SwiftUI
 
 struct SettingsView: View {
     enum Pane: String, CaseIterable, Identifiable {
-        case general, pasting, screenshots, privacy, history, about
+        case general, pasting, screenshots, drafts, privacy, history, about
 
         var id: Self { self }
 
@@ -13,6 +13,7 @@ struct SettingsView: View {
             case .general: "General"
             case .pasting: "Pasting"
             case .screenshots: "Screenshots"
+            case .drafts: "Drafts"
             case .privacy: "Privacy"
             case .history: "History"
             case .about: "About"
@@ -24,6 +25,7 @@ struct SettingsView: View {
             case .general: "gearshape.fill"
             case .pasting: "doc.on.clipboard.fill"
             case .screenshots: "camera.viewfinder"
+            case .drafts: "square.and.pencil"
             case .privacy: "hand.raised.fill"
             case .history: "clock.arrow.circlepath"
             case .about: "info.circle.fill"
@@ -35,6 +37,7 @@ struct SettingsView: View {
             case .general: .gray
             case .pasting: .blue
             case .screenshots: .purple
+            case .drafts: .green
             case .privacy: .indigo
             case .history: .orange
             case .about: .teal
@@ -46,6 +49,7 @@ struct SettingsView: View {
             case .general: "Startup and the shortcut that opens ClipBar."
             case .pasting: "Send the chosen item straight into the app you were using."
             case .screenshots: "Every screenshot you take lands in your history, ready to paste."
+            case .drafts: "Never lose a message you typed: ClipBar keeps a copy while you write."
             case .privacy: "Keep passwords and secrets out of your history."
             case .history: "How long items are kept, and how many."
             case .about: ""
@@ -106,6 +110,7 @@ struct SettingsView: View {
                 case .general: general
                 case .pasting: pasting
                 case .screenshots: screenshots
+                case .drafts: drafts
                 case .privacy: privacy
                 case .history: history
                 case .about: EmptyView()
@@ -181,6 +186,56 @@ struct SettingsView: View {
                     .foregroundStyle(.secondary)
             } icon: {
                 Image(systemName: "lightbulb.fill").foregroundStyle(.yellow)
+            }
+            .font(.system(size: 12))
+        }
+    }
+
+    @ViewBuilder
+    private var drafts: some View {
+        Section {
+            Toggle(isOn: $settings.draftsEnabled) {
+                Text("Keep what I type in other apps")
+                Text("If a form resets, a send fails or a tab closes, the text is waiting in the Drafts tab.")
+            }
+        }
+        Section {
+            Stepper(value: $settings.draftMinLength, in: Settings.draftLengthRange, step: 10) {
+                LabeledContent("Only text longer than", value: "\(settings.draftMinLength) characters")
+            }
+            Picker("Keep drafts for", selection: $settings.draftHours) {
+                ForEach([1, 3, 6, 12, 24, 72, 168], id: \.self) { hours in
+                    Text(hours < 24 ? (hours == 1 ? "1 hour" : "\(hours) hours") : (hours == 24 ? "1 day" : "\(hours / 24) days"))
+                        .tag(hours)
+                }
+            }
+            Stepper(value: $settings.draftCount, in: Settings.draftCountRange) {
+                LabeledContent("Keep at most", value: settings.draftCount == 1 ? "1 draft" : "\(settings.draftCount) drafts")
+            }
+            LabeledContent {
+                Button("Clear Drafts", role: .destructive) { store.clearDrafts() }
+                    .disabled(store.drafts.isEmpty)
+            } label: {
+                Text(store.drafts.count == 1 ? "1 draft kept" : "\(store.drafts.count) drafts kept")
+            }
+        }
+        .disabled(!settings.draftsEnabled)
+        Section {
+            Label {
+                Text("ClipBar reads the text of the field you're typing in, once a second. It never records keystrokes, never reads password fields, and skips terminals and password managers. Drafts stay on this Mac.")
+                    .foregroundStyle(.secondary)
+            } icon: {
+                Image(systemName: "lock.fill").foregroundStyle(.secondary)
+            }
+            .font(.system(size: 12))
+            Label {
+                Text(Clipboard.canPaste
+                     ? "Works in most apps and browsers. A few apps don't share their text fields with macOS."
+                     : "Needs **Accessibility** access (see Pasting) to read the field you're typing in.")
+                    .foregroundStyle(.secondary)
+            } icon: {
+                Image(systemName: Clipboard.canPaste ? "info.circle" : "exclamationmark.triangle.fill")
+                    .foregroundStyle(Clipboard.canPaste ? Color.secondary : Color.orange)
             }
             .font(.system(size: 12))
         }

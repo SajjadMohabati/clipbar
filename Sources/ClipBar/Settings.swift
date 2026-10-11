@@ -58,12 +58,21 @@ final class Settings: ObservableObject {
     @Published var skipSensitive: Bool { didSet { defaults.set(skipSensitive, forKey: "skipSensitive") } }
     @Published var captureScreenshots: Bool { didSet { defaults.set(captureScreenshots, forKey: "captureScreenshots") } }
     @Published var copyScreenshots: Bool { didSet { defaults.set(copyScreenshots, forKey: "copyScreenshots") } }
+    @Published var draftsEnabled: Bool { didSet { defaults.set(draftsEnabled, forKey: "draftsEnabled") } }
+    @Published var draftMinLength: Int { didSet { defaults.set(draftMinLength, forKey: "draftMinLength") } }
+    @Published var draftHours: Int { didSet { defaults.set(draftHours, forKey: "draftHours") } }
+    @Published var draftCount: Int { didSet { defaults.set(draftCount, forKey: "draftCount") } }
     @Published var shortcut: Shortcut {
         didSet {
             defaults.set(Int(shortcut.keyCode), forKey: "shortcutKeyCode")
             defaults.set(Int(shortcut.modifiers), forKey: "shortcutModifiers")
         }
     }
+
+    // Bounds that keep drafts cheap: a few short-lived items, never an archive.
+    static let draftLengthRange = 10...500
+    static let draftHourRange = 1...168
+    static let draftCountRange = 1...50
 
     private init() {
         let defaults = UserDefaults.standard
@@ -80,6 +89,10 @@ final class Settings: ObservableObject {
             "skipSensitive": true,
             "captureScreenshots": true,
             "copyScreenshots": true,
+            "draftsEnabled": false,
+            "draftMinLength": 30,
+            "draftHours": 12,
+            "draftCount": 10,
             "shortcutKeyCode": kVK_ANSI_V,
             "shortcutModifiers": cmdKey | shiftKey,
         ])
@@ -90,9 +103,17 @@ final class Settings: ObservableObject {
         skipSensitive = defaults.bool(forKey: "skipSensitive")
         captureScreenshots = defaults.bool(forKey: "captureScreenshots")
         copyScreenshots = defaults.bool(forKey: "copyScreenshots")
+        draftsEnabled = defaults.bool(forKey: "draftsEnabled")
+        draftMinLength = Self.draftLengthRange.clamp(defaults.integer(forKey: "draftMinLength"))
+        draftHours = Self.draftHourRange.clamp(defaults.integer(forKey: "draftHours"))
+        draftCount = Self.draftCountRange.clamp(defaults.integer(forKey: "draftCount"))
         shortcut = Shortcut(
             keyCode: UInt32(defaults.integer(forKey: "shortcutKeyCode")),
             modifiers: UInt32(defaults.integer(forKey: "shortcutModifiers"))
         )
     }
+}
+
+private extension ClosedRange where Bound == Int {
+    func clamp(_ value: Int) -> Int { Swift.min(Swift.max(value, lowerBound), upperBound) }
 }
