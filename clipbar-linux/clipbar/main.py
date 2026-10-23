@@ -106,6 +106,11 @@ def main() -> int:
         print("Please install PyQt6: sudo apt install python3-pyqt6 (Ubuntu/Debian) or pip install PyQt6", file=sys.stderr)
         return 1
 
+    # On Wayland only the focused window may read the clipboard, so a clipboard manager that
+    # runs in the background has to watch it through XWayland, where it's shared with every app.
+    if os.environ.get("WAYLAND_DISPLAY") and "QT_QPA_PLATFORM" not in os.environ:
+        os.environ["QT_QPA_PLATFORM"] = "xcb"
+
     app = QApplication(sys.argv)
     app.setApplicationName("ClipBar")
     app.setApplicationDisplayName("ClipBar")

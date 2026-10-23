@@ -1,17 +1,18 @@
 <p align="center">
-  <img src="docs/icon.png" width="160" alt="ClipBar, a clipboard manager for macOS">
+  <img src="docs/icon.png" width="160" alt="ClipBar, a clipboard manager for macOS and Linux">
 </p>
 
-<h1 align="center">ClipBar: Clipboard Manager for macOS That Never Loses What You Type</h1>
+<h1 align="center">ClipBar: Clipboard Manager for Mac and Linux That Never Loses What You Type</h1>
 
 <p align="center">
-  <b>A free, open-source clipboard history for the Mac menu bar, built with SwiftUI and Liquid Glass.</b><br>
-  <b>Drafts: recover text you typed and lost</b> · Touch ID–locked items · automatic screenshots · OCR search · instant paste
+  <b>A free, open-source clipboard history for the Mac menu bar and the Linux desktop, with a Liquid Glass design.</b><br>
+  <b>Drafts: recover text you typed and lost</b> · locked items · automatic screenshots · OCR search · instant paste
 </p>
 
 <p align="center">
   <a href="https://github.com/SajjadMohabati/clipbar-mac/releases/latest"><img src="https://img.shields.io/github/v/release/SajjadMohabati/clipbar-mac?label=download&color=7c5cff" alt="Download the latest release"></a>
   <img src="https://img.shields.io/badge/macOS-26%20Tahoe-black?logo=apple" alt="macOS 26 Tahoe">
+  <a href="https://github.com/SajjadMohabati/clipbar-mac/releases/tag/linux-v1.0"><img src="https://img.shields.io/badge/Linux-1.0-FCC624?logo=linux&logoColor=black" alt="ClipBar for Linux 1.0"></a>
   <img src="https://img.shields.io/badge/Apple%20silicon%20%2B%20Intel-universal-555" alt="Universal binary">
   <img src="https://img.shields.io/badge/Swift-6-F05138?logo=swift&logoColor=white" alt="Swift 6">
   <a href="LICENSE"><img src="https://img.shields.io/github/license/SajjadMohabati/clipbar-mac?color=2ea44f" alt="MIT license"></a>
@@ -19,7 +20,8 @@
 </p>
 
 <p align="center">
-  <a href="https://github.com/SajjadMohabati/clipbar-mac/releases/latest"><b>⬇️ Download ClipBar</b></a>
+  <a href="https://github.com/SajjadMohabati/clipbar-mac/releases/latest"><b>⬇️ Download for Mac</b></a>
+  &nbsp;·&nbsp; <a href="#clipbar-for-linux"><b>🐧 Linux</b></a>
   &nbsp;·&nbsp; <a href="#drafts-never-lose-what-you-typed-again">Drafts</a>
   &nbsp;·&nbsp; <a href="#features">Features</a>
   &nbsp;·&nbsp; <a href="#keyboard-shortcuts">Shortcuts</a>
@@ -88,7 +90,14 @@ app you were using**, while looking like it shipped with macOS Tahoe.
 - ⚡️ **Paste where you were typing.** Pick an item with `↩` and ClipBar pastes it into the focused text field of the previous app. `⌘1`–`⌘9` paste the first nine items instantly.
 - 🫧 **Real Liquid Glass.** A native SwiftUI interface made for macOS 26: glass panel, glass controls, smooth motion, light and dark mode.
 - 🛡 **Private by design.** No account, no cloud, no analytics and not a single network request. Everything stays on your Mac.
-- 🪶 **Tiny and dependency-free.** About 3,000 lines of Swift, zero third-party packages, a universal binary for Apple silicon and Intel.
+- 🪶 **Tiny and dependency-free.** About 3,000 lines of Swift, zero third-party packages, a universal binary for Apple silicon and Intel. Version 2.4 frees memory as soon as each check finishes and caps its image caches, so it stays light all day.
+- 🐧 **On Linux too.** [ClipBar for Linux](#clipbar-for-linux) brings the same history, Drafts, Saved items and glass design to Ubuntu, Debian and other distributions.
+
+## What's new
+
+- **2.4 (Mac):** lower memory use, and image thumbnails keep their real proportions instead of being squashed into a square.
+- **Linux 1.0:** the [first release of ClipBar for Linux](https://github.com/SajjadMohabati/clipbar-mac/releases/tag/linux-v1.0), with a `.deb` package for Ubuntu and Debian.
+- **2.3 (Mac):** [Drafts](#drafts-never-lose-what-you-typed-again), so you never lose what you typed.
 
 ## Features
 
@@ -141,7 +150,37 @@ app you were using**, while looking like it shipped with macOS Tahoe.
 - Liquid Glass design, full keyboard control, light and dark mode.
 - Universal binary for **Apple silicon and Intel**, written in Swift 6 with SwiftUI and AppKit.
 
-## Install
+## ClipBar for Linux
+
+<p align="center">
+  <img src="docs/linux-panel.png" width="400" alt="ClipBar clipboard manager for Linux with Liquid Glass design on Ubuntu">
+</p>
+
+The same clipboard manager, built for the Linux desktop with Python and Qt 6. It has the same look,
+the same tabs and the same keyboard-first workflow as the Mac app.
+
+| | Mac | Linux |
+| --- | --- | --- |
+| Clipboard history, pins, filters, search | ✅ | ✅ |
+| Drafts (recover text you typed) | ✅ Accessibility | ✅ AT-SPI, X11 and Wayland |
+| Saved items with titles | ✅ | ✅ |
+| Locked items | Keychain + Touch ID | AES-256-GCM, unlocked with your ClipBar password |
+| Screenshots in the history | ✅ | ✅ |
+| Text in images (OCR) | Apple Vision | Tesseract |
+| Direct paste | ✅ | ✅ xdotool, or wtype / ydotool on Wayland |
+| Open with | `⇧⌘V` | `Ctrl+Shift+V` |
+
+**Install on Ubuntu or Debian:** download `clipbar_1.0.0_all.deb` from the
+[Linux 1.0 release](https://github.com/SajjadMohabati/clipbar-mac/releases/tag/linux-v1.0), then:
+
+```bash
+sudo apt install ./clipbar_1.0.0_all.deb
+```
+
+For Fedora, Arch, installing from source, Wayland setup and a Docker preview, see the
+[Linux README](clipbar-linux/README.md).
+
+## Install on Mac
 
 **Requirements:** macOS 26 Tahoe or later, on Apple silicon or Intel.
 
@@ -282,6 +321,15 @@ history. You can turn screenshot capture off in Settings → Screenshots.
 </details>
 
 <details>
+<summary><b>Is there a Linux version of ClipBar?</b></summary>
+
+Yes. [ClipBar for Linux](#clipbar-for-linux) has the clipboard history, Drafts, Saved and locked
+items, screenshots and OCR. Install the `.deb` from the
+[Linux release](https://github.com/SajjadMohabati/clipbar-mac/releases/tag/linux-v1.0) on Ubuntu
+or Debian, or run it from source on other distributions.
+</details>
+
+<details>
 <summary><b>Does it work on Intel Macs and older macOS versions?</b></summary>
 
 It runs on both Apple silicon and Intel Macs. It needs macOS 26 Tahoe, because the interface is
@@ -318,6 +366,7 @@ Sources/ClipBar/
 scripts/
   make-icon.swift          renders the app icon
   make-dmg-background.swift renders the installer background
+clipbar-linux/             ClipBar for Linux (Python and Qt 6)
 ```
 
 ## Contributing
@@ -334,4 +383,4 @@ Created by **Sajjad Mohabati** · [github.com/SajjadMohabati](https://github.com
 
 [MIT](LICENSE) © Sajjad Mohabati
 
-<sub>Keywords: recover lost typed text on Mac, restore unsent message, form text recovery, autosave what you type, typing history Mac, draft autosave, lost text recovery macOS, clipboard manager for Mac, clipboard history macOS, menu bar clipboard app, macOS Tahoe clipboard, Liquid Glass app, free clipboard manager, open source clipboard manager, copy paste history Mac, Touch ID clipboard, screenshot to clipboard, OCR clipboard, SwiftUI menu bar app.</sub>
+<sub>Keywords: recover lost typed text on Mac, restore unsent message, form text recovery, autosave what you type, typing history Mac, draft autosave, lost text recovery macOS, clipboard manager for Mac, clipboard history macOS, menu bar clipboard app, macOS Tahoe clipboard, Liquid Glass app, free clipboard manager, open source clipboard manager, copy paste history Mac, Touch ID clipboard, screenshot to clipboard, OCR clipboard, SwiftUI menu bar app, clipboard manager for Linux, Ubuntu clipboard history, Linux clipboard manager with history, Wayland clipboard manager, recover lost typed text on Linux.</sub>

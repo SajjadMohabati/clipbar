@@ -1,6 +1,7 @@
 #!/usr/bin/env bash
 # Usage: ./build.sh            Build package
 #        ./build.sh install    Install locally to ~/.local with desktop entry & icons
+#        ./build.sh uninstall  Remove the local install
 #        ./build.sh deb        Build Debian / Ubuntu .deb package
 set -euo pipefail
 cd "$(dirname "$0")"
@@ -16,7 +17,15 @@ if [[ "$ACTION" == "build" ]]; then
 
 elif [[ "$ACTION" == "install" ]]; then
     echo "==> Installing ClipBar locally for current user..."
-    python3 -m pip install --upgrade --user .
+    # No pip: Ubuntu 24.04 and newer refuse `pip install --user`, and the system packages
+    # (PyQt6, cryptography, gi) are what ClipBar runs on, exactly like the .deb.
+    LIB_DIR="$HOME/.local/lib/clipbar"
+    rm -rf "$LIB_DIR"
+    mkdir -p "$LIB_DIR" "$HOME/.local/bin"
+    cp -r clipbar resources "$LIB_DIR/"
+    find "$LIB_DIR" -name "__pycache__" -prune -exec rm -rf {} +
+    printf '#!/usr/bin/env python3\nimport sys\nsys.path.insert(0, "%s")\nfrom clipbar.main import main\nsys.exit(main())\n' "$LIB_DIR" > "$HOME/.local/bin/clipbar"
+    chmod +x "$HOME/.local/bin/clipbar"
 
     # Install icon
     ICON_DIR="$HOME/.local/share/icons/hicolor/scalable/apps"
@@ -37,11 +46,17 @@ elif [[ "$ACTION" == "install" ]]; then
     echo "    Desktop entry: ~/.local/share/applications/clipbar.desktop"
     echo "    Launch with: clipbar"
 
+elif [[ "$ACTION" == "uninstall" ]]; then
+    rm -rf "$HOME/.local/lib/clipbar" "$HOME/.local/bin/clipbar" \
+        "$HOME/.local/share/applications/clipbar.desktop" \
+        "$HOME/.local/share/icons/hicolor/scalable/apps/clipbar.svg"
+    echo "==> Removed ClipBar. Your history is still in ~/.local/share/clipbar"
+
 elif [[ "$ACTION" == "deb" ]]; then
     ./scripts/build-deb.sh
 
 else
     echo "Unknown action: $ACTION"
-    echo "Usage: ./build.sh [build | install | deb]"
+    echo "Usage: ./build.sh [build | install | uninstall | deb]"
     exit 1
 fi

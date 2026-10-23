@@ -1,26 +1,28 @@
 <div dir="rtl">
 
 <p align="center">
-  <img src="docs/icon.png" width="160" alt="ClipBar مدير الحافظة المجاني لنظام ماك">
+  <img src="docs/icon.png" width="160" alt="ClipBar مدير الحافظة المجاني لنظامي ماك ولينكس">
 </p>
 
-<h1 align="center">ClipBar | مدير الحافظة المجاني لماك الذي لا يُضيع ما تكتبه</h1>
+<h1 align="center">ClipBar | مدير الحافظة المجاني لماك ولينكس الذي لا يُضيع ما تكتبه</h1>
 
 <p align="center">
-  <b>سجل الحافظة في شريط القوائم على ماك، بتصميم زجاجي Liquid Glass</b><br>
-  <b>Drafts: استرجاع النص الذي كتبته وفقدته</b> · قفل ببصمة الإصبع · لقطات شاشة تلقائية · البحث في النص داخل الصور · لصق فوري
+  <b>سجل الحافظة لشريط القوائم على ماك ولسطح مكتب لينكس، بتصميم زجاجي Liquid Glass</b><br>
+  <b>Drafts: استرجاع النص الذي كتبته وفقدته</b> · عناصر مقفلة · لقطات شاشة تلقائية · البحث في النص داخل الصور · لصق فوري
 </p>
 
 <p align="center">
   <a href="https://github.com/SajjadMohabati/clipbar-mac/releases/latest"><img src="https://img.shields.io/github/v/release/SajjadMohabati/clipbar-mac?label=download&color=7c5cff" alt="تنزيل أحدث إصدار"></a>
   <img src="https://img.shields.io/badge/macOS-26%20Tahoe-black?logo=apple" alt="macOS 26 Tahoe">
+  <a href="https://github.com/SajjadMohabati/clipbar-mac/releases/tag/linux-v1.0"><img src="https://img.shields.io/badge/Linux-1.0-FCC624?logo=linux&logoColor=black" alt="ClipBar لنظام لينكس 1.0"></a>
   <img src="https://img.shields.io/badge/Apple%20silicon%20%2B%20Intel-universal-555" alt="Apple Silicon و Intel">
   <a href="LICENSE"><img src="https://img.shields.io/github/license/SajjadMohabati/clipbar-mac?color=2ea44f" alt="رخصة MIT"></a>
   <a href="https://github.com/SajjadMohabati/clipbar-mac/stargazers"><img src="https://img.shields.io/github/stars/SajjadMohabati/clipbar-mac?style=social" alt="نجوم GitHub"></a>
 </p>
 
 <p align="center">
-  <a href="https://github.com/SajjadMohabati/clipbar-mac/releases/latest"><b>⬇️ تنزيل ClipBar</b></a>
+  <a href="https://github.com/SajjadMohabati/clipbar-mac/releases/latest"><b>⬇️ تنزيل لماك</b></a>
+  &nbsp;·&nbsp; <a href="#linux"><b>🐧 لينكس</b></a>
   &nbsp;·&nbsp; <a href="#drafts">المسودات</a>
   &nbsp;·&nbsp; <a href="#features">المزايا</a>
   &nbsp;·&nbsp; <a href="#install">التثبيت</a>
@@ -90,8 +92,15 @@
 - ⚡️ **لصق فوري:** اختر العنصر واضغط **Enter**، فيعود ClipBar إلى التطبيق الذي كنت تعمل فيه ويلصقه في الحقل نفسه. والعناصر التسعة الأولى تُلصق مباشرةً بـ **⌘1 إلى ⌘9**.
 - 🫧 **تصميم Liquid Glass:** واجهة زجاجية أصيلة لنظام macOS Tahoe، مع حركات سلسة ووضعين فاتح وداكن.
 - 🛡 **خصوصية تامة:** بلا حساب، بلا سحابة، بلا تتبّع، وبلا أي اتصال بالإنترنت. كل بياناتك تبقى على جهازك.
-- 🪶 **خفيف ونظيف:** نحو 3000 سطر من لغة Swift، دون أي مكتبات خارجية، ويعمل على جميع أجهزة ماك.
+- 🪶 **خفيف ونظيف:** نحو 3000 سطر من لغة Swift، دون أي مكتبات خارجية، ويعمل على جميع أجهزة ماك. الإصدار 2.4 يحرّر الذاكرة فور انتهاء كل فحص ويضع حدًّا لذاكرة الصور المؤقتة، فيبقى خفيفًا طوال اليوم.
+- 🐧 **على لينكس أيضًا:** [ClipBar لنظام لينكس](#linux) يقدّم السجل نفسه وميزة Drafts والعناصر المحفوظة والتصميم الزجاجي على أوبونتو وديبيان وغيرهما من التوزيعات.
 - 🆓 **مجاني ومفتوح المصدر:** بلا اشتراك وبلا مشتريات داخل التطبيق.
+
+## ما الجديد
+
+- **الإصدار 2.4 (ماك):** استهلاك أقل للذاكرة، وتظهر الصور المصغّرة بنسبها الحقيقية بدل ضغطها داخل مربع.
+- **لينكس 1.0:** [أول إصدار من ClipBar لنظام لينكس](https://github.com/SajjadMohabati/clipbar-mac/releases/tag/linux-v1.0)، مع حزمة `.deb` لأوبونتو وديبيان.
+- **الإصدار 2.3 (ماك):** ميزة [Drafts](#drafts)، فلا تفقد ما كتبته بعد اليوم.
 
 <a id="features"></a>
 
@@ -146,9 +155,42 @@
 - تصميم Liquid Glass، وتحكم كامل بلوحة المفاتيح، ووضعان فاتح وداكن.
 - ملف واحد يعمل على **Apple Silicon وIntel**، مكتوب بـ Swift 6 وSwiftUI وAppKit.
 
+<a id="linux"></a>
+
+## ClipBar لنظام لينكس
+
+<p align="center">
+  <img src="docs/linux-panel.png" width="400" alt="مدير الحافظة ClipBar لنظام لينكس بتصميم زجاجي على أوبونتو">
+</p>
+
+مدير الحافظة نفسه، مصمَّم هذه المرة لسطح مكتب لينكس، ومبني بلغة Python وQt 6. المظهر نفسه، والتبويبات نفسها، والعمل السريع نفسه بلوحة المفاتيح كما في نسخة ماك.
+
+| | ماك | لينكس |
+| --- | --- | --- |
+| السجل والتثبيت والفلاتر والبحث | ✅ | ✅ |
+| Drafts (استرجاع النص المكتوب) | ✅ عبر Accessibility | ✅ عبر AT-SPI، على X11 وWayland |
+| العناصر المحفوظة مع العناوين | ✅ | ✅ |
+| العناصر المقفلة | Keychain وبصمة الإصبع | تشفير AES-256-GCM، تُفتح بكلمة مرور ClipBar |
+| لقطات الشاشة في السجل | ✅ | ✅ |
+| النص داخل الصور (OCR) | Apple Vision | Tesseract |
+| اللصق المباشر | ✅ | ✅ عبر xdotool، أو wtype / ydotool على Wayland |
+| اختصار الفتح | `⇧⌘V` | `Ctrl+Shift+V` |
+
+**التثبيت على أوبونتو أو ديبيان:** نزّل الملف `clipbar_1.0.0_all.deb` من [صفحة إصدار لينكس 1.0](https://github.com/SajjadMohabati/clipbar-mac/releases/tag/linux-v1.0)، ثم:
+
+<div dir="ltr">
+
+```bash
+sudo apt install ./clipbar_1.0.0_all.deb
+```
+
+</div>
+
+لفيدورا وآرتش، والتثبيت من المصدر، وإعداد Wayland، والتجربة عبر Docker، راجع [الدليل العربي لنسخة لينكس](clipbar-linux/README.ar.md).
+
 <a id="install"></a>
 
-## التثبيت
+## التثبيت على ماك
 
 **المتطلبات:** macOS 26 Tahoe أو أحدث، على أجهزة ماك بمعالج Apple Silicon أو Intel.
 
@@ -278,6 +320,12 @@ cd clipbar-mac
 </details>
 
 <details>
+<summary><b>هل يوجد إصدار من ClipBar لنظام لينكس؟</b></summary>
+
+نعم. [ClipBar لنظام لينكس](#linux) يتضمن سجل الحافظة وميزة Drafts والعناصر المحفوظة والمقفلة ولقطات الشاشة واستخراج النص من الصور. على أوبونتو وديبيان ثبّت حزمة `.deb` من [صفحة إصدار لينكس](https://github.com/SajjadMohabati/clipbar-mac/releases/tag/linux-v1.0)، أو شغّله من المصدر على التوزيعات الأخرى.
+</details>
+
+<details>
 <summary><b>هل يعرض النصوص العربية بشكل صحيح؟</b></summary>
 
 نعم. تُعرض النصوص العربية والنصوص من اليمين إلى اليسار بشكل صحيح في القائمة والبحث والمحرر، كما يتعرّف استخراج النص من الصور على اللغة تلقائيًا.
@@ -289,6 +337,7 @@ cd clipbar-mac
 
 - `history.json`: سجل الحافظة
 - `saved.json`: العناصر المحفوظة (قيم العناصر المقفلة في Keychain، لا في هذا الملف)
+- `drafts.json`: مسودات النصوص التي كتبتها، إن كانت ميزة Drafts مفعّلة
 - `Images/`: الصور المنسوخة بصيغة PNG، وتُحفظ الصورة مرة واحدة فقط مهما نسختها
 
 للبدء من جديد، أغلق ClipBar واحذف هذا المجلد.
@@ -306,6 +355,6 @@ cd clipbar-mac
 
 [MIT](LICENSE) © سجاد محبتي (Sajjad Mohabati)
 
-<sub>كلمات مفتاحية: استرجاع النص المكتوب في ماك، استعادة نص محذوف، استرجاع رسالة لم تُرسل، حفظ تلقائي للنص المكتوب، استرجاع نص النموذج، مسودة تلقائية، مدير الحافظة لماك، برنامج الحافظة لنظام ماك، سجل الحافظة macOS، إدارة النسخ واللصق في ماك، تطبيق شريط القوائم لماك، حافظة مجانية لماك، برنامج نسخ ولصق لماك، حفظ النصوص المنسوخة في ماك، لقطة الشاشة إلى الحافظة، التعرف على النص في الصور، قفل ببصمة الإصبع، macOS Tahoe، Liquid Glass، clipboard manager for Mac.</sub>
+<sub>كلمات مفتاحية: استرجاع النص المكتوب في ماك، استعادة نص محذوف، استرجاع رسالة لم تُرسل، حفظ تلقائي للنص المكتوب، استرجاع نص النموذج، مسودة تلقائية، مدير الحافظة لماك، برنامج الحافظة لنظام ماك، سجل الحافظة macOS، إدارة النسخ واللصق في ماك، تطبيق شريط القوائم لماك، حافظة مجانية لماك، برنامج نسخ ولصق لماك، حفظ النصوص المنسوخة في ماك، لقطة الشاشة إلى الحافظة، التعرف على النص في الصور، قفل ببصمة الإصبع، macOS Tahoe، Liquid Glass، clipboard manager for Mac، مدير الحافظة لينكس، سجل الحافظة أوبونتو، برنامج نسخ ولصق لينكس، حافظة Wayland، استرجاع النص المكتوب في لينكس، clipboard manager for Linux.</sub>
 
 </div>

@@ -981,8 +981,9 @@ class ClipView(QWidget):
             else:
                 self.on_close_callback()
             return
-        elif key == Qt.Key.Key_Tab and self.store.mode == "history":
-            delta = -1 if (modifiers & Qt.KeyboardModifier.ShiftModifier) else 1
+        elif key in (Qt.Key.Key_Tab, Qt.Key.Key_Backtab) and self.store.mode == "history":
+            # Qt reports Shift+Tab as Backtab.
+            delta = -1 if key == Qt.Key.Key_Backtab or modifiers & Qt.KeyboardModifier.ShiftModifier else 1
             self.store.cycle_filter(delta)
             self._update_view()
             return
