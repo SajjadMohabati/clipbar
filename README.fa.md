@@ -12,16 +12,16 @@
 </p>
 
 <p align="center">
-  <a href="https://github.com/SajjadMohabati/clipbar-mac/releases/latest"><img src="https://img.shields.io/github/v/release/SajjadMohabati/clipbar-mac?label=download&color=7c5cff" alt="دانلود آخرین نسخه"></a>
+  <a href="https://github.com/SajjadMohabati/clipbar/releases/latest"><img src="https://img.shields.io/github/v/release/SajjadMohabati/clipbar?label=download&color=7c5cff" alt="دانلود آخرین نسخه"></a>
   <img src="https://img.shields.io/badge/macOS-26%20Tahoe-black?logo=apple" alt="macOS 26 Tahoe">
-  <a href="https://github.com/SajjadMohabati/clipbar-mac/releases/tag/linux-v1.0"><img src="https://img.shields.io/badge/Linux-1.0-FCC624?logo=linux&logoColor=black" alt="کلیپ‌بار برای لینوکس ۱.۰"></a>
+  <a href="https://github.com/SajjadMohabati/clipbar/releases/tag/linux-v1.0"><img src="https://img.shields.io/badge/Linux-1.0-FCC624?logo=linux&logoColor=black" alt="کلیپ‌بار برای لینوکس ۱.۰"></a>
   <img src="https://img.shields.io/badge/Apple%20silicon%20%2B%20Intel-universal-555" alt="Apple Silicon و Intel">
-  <a href="LICENSE"><img src="https://img.shields.io/github/license/SajjadMohabati/clipbar-mac?color=2ea44f" alt="لایسنس MIT"></a>
-  <a href="https://github.com/SajjadMohabati/clipbar-mac/stargazers"><img src="https://img.shields.io/github/stars/SajjadMohabati/clipbar-mac?style=social" alt="ستاره‌های گیت‌هاب"></a>
+  <a href="LICENSE"><img src="https://img.shields.io/github/license/SajjadMohabati/clipbar?color=2ea44f" alt="لایسنس MIT"></a>
+  <a href="https://github.com/SajjadMohabati/clipbar/stargazers"><img src="https://img.shields.io/github/stars/SajjadMohabati/clipbar?style=social" alt="ستاره‌های گیت‌هاب"></a>
 </p>
 
 <p align="center">
-  <a href="https://github.com/SajjadMohabati/clipbar-mac/releases/latest"><b>⬇️ دانلود برای مک</b></a>
+  <a href="https://github.com/SajjadMohabati/clipbar/releases/latest"><b>⬇️ دانلود برای مک</b></a>
   &nbsp;·&nbsp; <a href="#linux"><b>🐧 لینوکس</b></a>
   &nbsp;·&nbsp; <a href="#drafts">پیش‌نویس‌ها</a>
   &nbsp;·&nbsp; <a href="#features">قابلیت‌ها</a>
@@ -99,7 +99,7 @@
 ## چه خبر؟
 
 - **نسخه‌ی ۲.۴ (مک):** مصرف حافظه‌ی کمتر، و تصویرهای کوچیک عکس‌ها با همون نسبت واقعی‌شون نشون داده می‌شن، نه فشرده توی یه مربع.
-- **لینوکس ۱.۰:** [اولین نسخه‌ی کلیپ‌بار برای لینوکس](https://github.com/SajjadMohabati/clipbar-mac/releases/tag/linux-v1.0)، با بسته‌ی `.deb` برای اوبونتو و دبیان.
+- **لینوکس ۱.۰:** [اولین نسخه‌ی کلیپ‌بار برای لینوکس](https://github.com/SajjadMohabati/clipbar/releases/tag/linux-v1.0)، با بسته‌ی `.deb` برای اوبونتو و دبیان.
 - **نسخه‌ی ۲.۳ (مک):** قابلیت [Drafts](#drafts)، که دیگه متنی که تایپ کردی گم نشه.
 
 <a id="features"></a>
@@ -176,7 +176,7 @@
 | پیست مستقیم | ✅ | ✅ با xdotool، یا wtype / ydotool روی Wayland |
 | میانبر باز کردن | `⇧⌘V` | `Ctrl+Shift+V` |
 
-**نصب روی اوبونتو یا دبیان:** فایل `clipbar_1.0.0_all.deb` رو از [صفحه‌ی نسخه‌ی لینوکس ۱.۰](https://github.com/SajjadMohabati/clipbar-mac/releases/tag/linux-v1.0) دانلود کن و بعد:
+**نصب روی اوبونتو یا دبیان:** فایل `clipbar_1.0.0_all.deb` رو از [صفحه‌ی نسخه‌ی لینوکس ۱.۰](https://github.com/SajjadMohabati/clipbar/releases/tag/linux-v1.0) دانلود کن و بعد:
 
 <div dir="ltr">
 
@@ -196,7 +196,7 @@ sudo apt install ./clipbar_1.0.0_all.deb
 
 ### دانلود (پیشنهادی)
 
-1. فایل **`ClipBar-<version>.dmg`** رو از [صفحه‌ی آخرین نسخه](https://github.com/SajjadMohabati/clipbar-mac/releases/latest) دانلود کن.
+1. فایل **`ClipBar-<version>.dmg`** رو از [صفحه‌ی آخرین نسخه](https://github.com/SajjadMohabati/clipbar/releases/latest) دانلود کن.
 2. بازش کن و **ClipBar** رو بکش روی **Applications**.
 
 <p align="center">
@@ -228,8 +228,8 @@ xattr -dr com.apple.quarantine /Applications/ClipBar.app
 <div dir="ltr">
 
 ```bash
-git clone https://github.com/SajjadMohabati/clipbar-mac.git
-cd clipbar-mac
+git clone https://github.com/SajjadMohabati/clipbar.git
+cd clipbar
 ./build.sh install
 ```
 
@@ -322,7 +322,7 @@ macOS اسکرین‌شات رو فقط بعد از بسته شدن اون پی�
 <details>
 <summary><b>کلیپ‌بار نسخه‌ی لینوکس داره؟</b></summary>
 
-بله. [کلیپ‌بار برای لینوکس](#linux) تاریخچه‌ی کلیپ‌بورد، Drafts، آیتم‌های ذخیره‌شده و قفل‌دار، اسکرین‌شات و OCR رو داره. روی اوبونتو و دبیان فایل `.deb` رو از [صفحه‌ی نسخه‌ی لینوکس](https://github.com/SajjadMohabati/clipbar-mac/releases/tag/linux-v1.0) نصب کن، یا روی بقیه‌ی توزیع‌ها از سورس اجراش کن.
+بله. [کلیپ‌بار برای لینوکس](#linux) تاریخچه‌ی کلیپ‌بورد، Drafts، آیتم‌های ذخیره‌شده و قفل‌دار، اسکرین‌شات و OCR رو داره. روی اوبونتو و دبیان فایل `.deb` رو از [صفحه‌ی نسخه‌ی لینوکس](https://github.com/SajjadMohabati/clipbar/releases/tag/linux-v1.0) نصب کن، یا روی بقیه‌ی توزیع‌ها از سورس اجراش کن.
 </details>
 
 <details>
@@ -344,7 +344,7 @@ macOS اسکرین‌شات رو فقط بعد از بسته شدن اون پی�
 
 ## مشارکت
 
-گزارش باگ، ایده و Pull Request با کمال میل پذیرفته می‌شه. از بخش [Issues](https://github.com/SajjadMohabati/clipbar-mac/issues) شروع کن.
+گزارش باگ، ایده و Pull Request با کمال میل پذیرفته می‌شه. از بخش [Issues](https://github.com/SajjadMohabati/clipbar/issues) شروع کن.
 اگه کلیپ‌بار به کارت اومد، با یه ⭐️ روی گیت‌هاب کمک کن بقیه هم پیداش کنن.
 
 ## سازنده

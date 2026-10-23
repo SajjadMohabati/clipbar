@@ -10,7 +10,7 @@
 </p>
 
 <p align="center">
-  <a href="https://github.com/SajjadMohabati/clipbar-mac/releases/tag/linux-v1.0"><img src="https://img.shields.io/badge/download-1.0-7c5cff" alt="Download ClipBar for Linux 1.0"></a>
+  <a href="https://github.com/SajjadMohabati/clipbar/releases/tag/linux-v1.0"><img src="https://img.shields.io/badge/download-1.0-7c5cff" alt="Download ClipBar for Linux 1.0"></a>
   <img src="https://img.shields.io/badge/Ubuntu-24.04%2B-E95420?logo=ubuntu&logoColor=white" alt="Ubuntu 24.04 and newer">
   <img src="https://img.shields.io/badge/Debian-12%2B-A81D33?logo=debian&logoColor=white" alt="Debian 12 and newer">
   <img src="https://img.shields.io/badge/X11%20%2B%20Wayland-supported-555" alt="X11 and Wayland">
@@ -105,7 +105,7 @@ accessibility, even if you never copied it. Open ClipBar, go to the **Drafts** t
 ### Ubuntu and Debian (recommended)
 
 Download **`clipbar_1.0.0_all.deb`** from the
-[latest Linux release](https://github.com/SajjadMohabati/clipbar-mac/releases/tag/linux-v1.0) and install it:
+[latest Linux release](https://github.com/SajjadMohabati/clipbar/releases/tag/linux-v1.0) and install it:
 
 ```bash
 sudo apt install ./clipbar_1.0.0_all.deb
@@ -124,16 +124,16 @@ with your desktop, turn on **Launch at login** in Settings → General.
 
 ```bash
 sudo dnf install python3-pyqt6 python3-cryptography python3-gobject at-spi2-core xdotool tesseract
-git clone https://github.com/SajjadMohabati/clipbar-mac.git
-cd clipbar-mac/clipbar-linux && ./build.sh install
+git clone https://github.com/SajjadMohabati/clipbar.git
+cd clipbar/clipbar-linux && ./build.sh install
 ```
 
 ### Arch Linux and Manjaro
 
 ```bash
 sudo pacman -S python-pyqt6 python-cryptography python-gobject at-spi2-core xdotool tesseract tesseract-data-eng
-git clone https://github.com/SajjadMohabati/clipbar-mac.git
-cd clipbar-mac/clipbar-linux && ./build.sh install
+git clone https://github.com/SajjadMohabati/clipbar.git
+cd clipbar/clipbar-linux && ./build.sh install
 ```
 
 `./build.sh install` puts ClipBar in `~/.local` with a menu entry, using your system's Python
@@ -195,7 +195,7 @@ From a terminal: `clipbar --toggle` opens or closes the panel, `clipbar --settin
 
 ClipBar is a free, open-source clipboard manager for Ubuntu with history, search, pinned and saved
 items, encrypted locked items, screenshots, OCR and Drafts, which recovers text you typed and lost.
-Install the `.deb` from the [release page](https://github.com/SajjadMohabati/clipbar-mac/releases/tag/linux-v1.0).
+Install the `.deb` from the [release page](https://github.com/SajjadMohabati/clipbar/releases/tag/linux-v1.0).
 </details>
 
 <details>
@@ -279,7 +279,7 @@ clipbar-linux/
 
 Created by **Sajjad Mohabati** · [github.com/SajjadMohabati](https://github.com/SajjadMohabati)
 
-If ClipBar helps you, a ⭐️ on [GitHub](https://github.com/SajjadMohabati/clipbar-mac) helps other people find it.
+If ClipBar helps you, a ⭐️ on [GitHub](https://github.com/SajjadMohabati/clipbar) helps other people find it.
 
 ## License
 

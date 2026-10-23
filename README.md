@@ -10,17 +10,17 @@
 </p>
 
 <p align="center">
-  <a href="https://github.com/SajjadMohabati/clipbar-mac/releases/latest"><img src="https://img.shields.io/github/v/release/SajjadMohabati/clipbar-mac?label=download&color=7c5cff" alt="Download the latest release"></a>
+  <a href="https://github.com/SajjadMohabati/clipbar/releases/latest"><img src="https://img.shields.io/github/v/release/SajjadMohabati/clipbar?label=download&color=7c5cff" alt="Download the latest release"></a>
   <img src="https://img.shields.io/badge/macOS-26%20Tahoe-black?logo=apple" alt="macOS 26 Tahoe">
-  <a href="https://github.com/SajjadMohabati/clipbar-mac/releases/tag/linux-v1.0"><img src="https://img.shields.io/badge/Linux-1.0-FCC624?logo=linux&logoColor=black" alt="ClipBar for Linux 1.0"></a>
+  <a href="https://github.com/SajjadMohabati/clipbar/releases/tag/linux-v1.0"><img src="https://img.shields.io/badge/Linux-1.0-FCC624?logo=linux&logoColor=black" alt="ClipBar for Linux 1.0"></a>
   <img src="https://img.shields.io/badge/Apple%20silicon%20%2B%20Intel-universal-555" alt="Universal binary">
   <img src="https://img.shields.io/badge/Swift-6-F05138?logo=swift&logoColor=white" alt="Swift 6">
-  <a href="LICENSE"><img src="https://img.shields.io/github/license/SajjadMohabati/clipbar-mac?color=2ea44f" alt="MIT license"></a>
-  <a href="https://github.com/SajjadMohabati/clipbar-mac/stargazers"><img src="https://img.shields.io/github/stars/SajjadMohabati/clipbar-mac?style=social" alt="GitHub stars"></a>
+  <a href="LICENSE"><img src="https://img.shields.io/github/license/SajjadMohabati/clipbar?color=2ea44f" alt="MIT license"></a>
+  <a href="https://github.com/SajjadMohabati/clipbar/stargazers"><img src="https://img.shields.io/github/stars/SajjadMohabati/clipbar?style=social" alt="GitHub stars"></a>
 </p>
 
 <p align="center">
-  <a href="https://github.com/SajjadMohabati/clipbar-mac/releases/latest"><b>⬇️ Download for Mac</b></a>
+  <a href="https://github.com/SajjadMohabati/clipbar/releases/latest"><b>⬇️ Download for Mac</b></a>
   &nbsp;·&nbsp; <a href="#clipbar-for-linux"><b>🐧 Linux</b></a>
   &nbsp;·&nbsp; <a href="#drafts-never-lose-what-you-typed-again">Drafts</a>
   &nbsp;·&nbsp; <a href="#features">Features</a>
@@ -96,7 +96,7 @@ app you were using**, while looking like it shipped with macOS Tahoe.
 ## What's new
 
 - **2.4 (Mac):** lower memory use, and image thumbnails keep their real proportions instead of being squashed into a square.
-- **Linux 1.0:** the [first release of ClipBar for Linux](https://github.com/SajjadMohabati/clipbar-mac/releases/tag/linux-v1.0), with a `.deb` package for Ubuntu and Debian.
+- **Linux 1.0:** the [first release of ClipBar for Linux](https://github.com/SajjadMohabati/clipbar/releases/tag/linux-v1.0), with a `.deb` package for Ubuntu and Debian.
 - **2.3 (Mac):** [Drafts](#drafts-never-lose-what-you-typed-again), so you never lose what you typed.
 
 ## Features
@@ -171,7 +171,7 @@ the same tabs and the same keyboard-first workflow as the Mac app.
 | Open with | `⇧⌘V` | `Ctrl+Shift+V` |
 
 **Install on Ubuntu or Debian:** download `clipbar_1.0.0_all.deb` from the
-[Linux 1.0 release](https://github.com/SajjadMohabati/clipbar-mac/releases/tag/linux-v1.0), then:
+[Linux 1.0 release](https://github.com/SajjadMohabati/clipbar/releases/tag/linux-v1.0), then:
 
 ```bash
 sudo apt install ./clipbar_1.0.0_all.deb
@@ -186,7 +186,7 @@ For Fedora, Arch, installing from source, Wayland setup and a Docker preview, se
 
 ### Download (recommended)
 
-1. Download **`ClipBar-<version>.dmg`** from the [latest release](https://github.com/SajjadMohabati/clipbar-mac/releases/latest).
+1. Download **`ClipBar-<version>.dmg`** from the [latest release](https://github.com/SajjadMohabati/clipbar/releases/latest).
 2. Open it and drag **ClipBar** onto **Applications**.
 
 <p align="center">
@@ -216,8 +216,8 @@ ClipBar still copies the item and you press `⌘V` yourself.
 Requires the Swift 6 toolchain (Xcode 26 or the Command Line Tools).
 
 ```bash
-git clone https://github.com/SajjadMohabati/clipbar-mac.git
-cd clipbar-mac
+git clone https://github.com/SajjadMohabati/clipbar.git
+cd clipbar
 ./build.sh install
 ```
 
@@ -325,7 +325,7 @@ history. You can turn screenshot capture off in Settings → Screenshots.
 
 Yes. [ClipBar for Linux](#clipbar-for-linux) has the clipboard history, Drafts, Saved and locked
 items, screenshots and OCR. Install the `.deb` from the
-[Linux release](https://github.com/SajjadMohabati/clipbar-mac/releases/tag/linux-v1.0) on Ubuntu
+[Linux release](https://github.com/SajjadMohabati/clipbar/releases/tag/linux-v1.0) on Ubuntu
 or Debian, or run it from source on other distributions.
 </details>
 
@@ -372,7 +372,7 @@ clipbar-linux/             ClipBar for Linux (Python and Qt 6)
 ## Contributing
 
 Bug reports, ideas and pull requests are welcome. Open an
-[issue](https://github.com/SajjadMohabati/clipbar-mac/issues) to start a conversation.
+[issue](https://github.com/SajjadMohabati/clipbar/issues) to start a conversation.
 If ClipBar saves you time, a ⭐️ on GitHub helps other people find it.
 
 ## Author

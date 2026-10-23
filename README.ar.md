@@ -12,16 +12,16 @@
 </p>
 
 <p align="center">
-  <a href="https://github.com/SajjadMohabati/clipbar-mac/releases/latest"><img src="https://img.shields.io/github/v/release/SajjadMohabati/clipbar-mac?label=download&color=7c5cff" alt="تنزيل أحدث إصدار"></a>
+  <a href="https://github.com/SajjadMohabati/clipbar/releases/latest"><img src="https://img.shields.io/github/v/release/SajjadMohabati/clipbar?label=download&color=7c5cff" alt="تنزيل أحدث إصدار"></a>
   <img src="https://img.shields.io/badge/macOS-26%20Tahoe-black?logo=apple" alt="macOS 26 Tahoe">
-  <a href="https://github.com/SajjadMohabati/clipbar-mac/releases/tag/linux-v1.0"><img src="https://img.shields.io/badge/Linux-1.0-FCC624?logo=linux&logoColor=black" alt="ClipBar لنظام لينكس 1.0"></a>
+  <a href="https://github.com/SajjadMohabati/clipbar/releases/tag/linux-v1.0"><img src="https://img.shields.io/badge/Linux-1.0-FCC624?logo=linux&logoColor=black" alt="ClipBar لنظام لينكس 1.0"></a>
   <img src="https://img.shields.io/badge/Apple%20silicon%20%2B%20Intel-universal-555" alt="Apple Silicon و Intel">
-  <a href="LICENSE"><img src="https://img.shields.io/github/license/SajjadMohabati/clipbar-mac?color=2ea44f" alt="رخصة MIT"></a>
-  <a href="https://github.com/SajjadMohabati/clipbar-mac/stargazers"><img src="https://img.shields.io/github/stars/SajjadMohabati/clipbar-mac?style=social" alt="نجوم GitHub"></a>
+  <a href="LICENSE"><img src="https://img.shields.io/github/license/SajjadMohabati/clipbar?color=2ea44f" alt="رخصة MIT"></a>
+  <a href="https://github.com/SajjadMohabati/clipbar/stargazers"><img src="https://img.shields.io/github/stars/SajjadMohabati/clipbar?style=social" alt="نجوم GitHub"></a>
 </p>
 
 <p align="center">
-  <a href="https://github.com/SajjadMohabati/clipbar-mac/releases/latest"><b>⬇️ تنزيل لماك</b></a>
+  <a href="https://github.com/SajjadMohabati/clipbar/releases/latest"><b>⬇️ تنزيل لماك</b></a>
   &nbsp;·&nbsp; <a href="#linux"><b>🐧 لينكس</b></a>
   &nbsp;·&nbsp; <a href="#drafts">المسودات</a>
   &nbsp;·&nbsp; <a href="#features">المزايا</a>
@@ -99,7 +99,7 @@
 ## ما الجديد
 
 - **الإصدار 2.4 (ماك):** استهلاك أقل للذاكرة، وتظهر الصور المصغّرة بنسبها الحقيقية بدل ضغطها داخل مربع.
-- **لينكس 1.0:** [أول إصدار من ClipBar لنظام لينكس](https://github.com/SajjadMohabati/clipbar-mac/releases/tag/linux-v1.0)، مع حزمة `.deb` لأوبونتو وديبيان.
+- **لينكس 1.0:** [أول إصدار من ClipBar لنظام لينكس](https://github.com/SajjadMohabati/clipbar/releases/tag/linux-v1.0)، مع حزمة `.deb` لأوبونتو وديبيان.
 - **الإصدار 2.3 (ماك):** ميزة [Drafts](#drafts)، فلا تفقد ما كتبته بعد اليوم.
 
 <a id="features"></a>
@@ -176,7 +176,7 @@
 | اللصق المباشر | ✅ | ✅ عبر xdotool، أو wtype / ydotool على Wayland |
 | اختصار الفتح | `⇧⌘V` | `Ctrl+Shift+V` |
 
-**التثبيت على أوبونتو أو ديبيان:** نزّل الملف `clipbar_1.0.0_all.deb` من [صفحة إصدار لينكس 1.0](https://github.com/SajjadMohabati/clipbar-mac/releases/tag/linux-v1.0)، ثم:
+**التثبيت على أوبونتو أو ديبيان:** نزّل الملف `clipbar_1.0.0_all.deb` من [صفحة إصدار لينكس 1.0](https://github.com/SajjadMohabati/clipbar/releases/tag/linux-v1.0)، ثم:
 
 <div dir="ltr">
 
@@ -196,7 +196,7 @@ sudo apt install ./clipbar_1.0.0_all.deb
 
 ### التنزيل (موصى به)
 
-1. نزّل ملف **`ClipBar-<version>.dmg`** من [صفحة أحدث إصدار](https://github.com/SajjadMohabati/clipbar-mac/releases/latest).
+1. نزّل ملف **`ClipBar-<version>.dmg`** من [صفحة أحدث إصدار](https://github.com/SajjadMohabati/clipbar/releases/latest).
 2. افتحه واسحب **ClipBar** إلى **Applications**.
 
 <p align="center">
@@ -228,8 +228,8 @@ xattr -dr com.apple.quarantine /Applications/ClipBar.app
 <div dir="ltr">
 
 ```bash
-git clone https://github.com/SajjadMohabati/clipbar-mac.git
-cd clipbar-mac
+git clone https://github.com/SajjadMohabati/clipbar.git
+cd clipbar
 ./build.sh install
 ```
 
@@ -322,7 +322,7 @@ cd clipbar-mac
 <details>
 <summary><b>هل يوجد إصدار من ClipBar لنظام لينكس؟</b></summary>
 
-نعم. [ClipBar لنظام لينكس](#linux) يتضمن سجل الحافظة وميزة Drafts والعناصر المحفوظة والمقفلة ولقطات الشاشة واستخراج النص من الصور. على أوبونتو وديبيان ثبّت حزمة `.deb` من [صفحة إصدار لينكس](https://github.com/SajjadMohabati/clipbar-mac/releases/tag/linux-v1.0)، أو شغّله من المصدر على التوزيعات الأخرى.
+نعم. [ClipBar لنظام لينكس](#linux) يتضمن سجل الحافظة وميزة Drafts والعناصر المحفوظة والمقفلة ولقطات الشاشة واستخراج النص من الصور. على أوبونتو وديبيان ثبّت حزمة `.deb` من [صفحة إصدار لينكس](https://github.com/SajjadMohabati/clipbar/releases/tag/linux-v1.0)، أو شغّله من المصدر على التوزيعات الأخرى.
 </details>
 
 <details>
@@ -344,7 +344,7 @@ cd clipbar-mac
 
 ## المساهمة
 
-نرحّب بتقارير الأخطاء والأفكار وطلبات الدمج (Pull Requests). ابدأ من قسم [Issues](https://github.com/SajjadMohabati/clipbar-mac/issues).
+نرحّب بتقارير الأخطاء والأفكار وطلبات الدمج (Pull Requests). ابدأ من قسم [Issues](https://github.com/SajjadMohabati/clipbar/issues).
 وإن أفادك ClipBar، فساعد الآخرين على اكتشافه بإضافة ⭐️ على GitHub.
 
 ## المطوّر

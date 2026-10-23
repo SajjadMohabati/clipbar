@@ -73,7 +73,7 @@ func render(scale: CGFloat) -> NSBitmapImageRep {
     arrow.stroke()
 
     text("Created by Sajjad Mohabati", size: 12, weight: .semibold, alpha: 0.75, y: 62)
-    text("github.com/SajjadMohabati/clipbar-mac", size: 11, weight: .regular, alpha: 0.5, y: 44)
+    text("github.com/SajjadMohabati/clipbar", size: 11, weight: .regular, alpha: 0.5, y: 44)
 
     NSGraphicsContext.restoreGraphicsState()
     return rep

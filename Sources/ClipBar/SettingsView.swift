@@ -294,7 +294,7 @@ struct SettingsView: View {
                 .foregroundStyle(.secondary)
                 .multilineTextAlignment(.center)
             Button {
-                if let url = URL(string: "https://github.com/SajjadMohabati/clipbar-mac") {
+                if let url = URL(string: "https://github.com/SajjadMohabati/clipbar") {
                     NSWorkspace.shared.open(url)
                 }
             } label: {

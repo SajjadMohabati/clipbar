@@ -23,7 +23,7 @@ if [ ! -f "$DATA_DIR/history.json" ]; then
   },
   {
     "id": "sample-2",
-    "text": "https://github.com/SajjadMohabati/clipbar-mac",
+    "text": "https://github.com/SajjadMohabati/clipbar",
     "pinned": false,
     "uses": 2,
     "date": "2026-10-23T01:10:00"

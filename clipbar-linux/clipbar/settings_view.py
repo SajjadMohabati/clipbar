@@ -397,7 +397,7 @@ class SettingsView(QMainWindow):
 
         btn_gh = QPushButton("View on GitHub")
         btn_gh.setStyleSheet("background: rgba(255, 255, 255, 0.12); color: #ffffff; border-radius: 8px; padding: 6px 16px; font-weight: 600;")
-        btn_gh.clicked.connect(lambda: subprocess.Popen(["xdg-open", "https://github.com/SajjadMohabati/clipbar-mac"]))
+        btn_gh.clicked.connect(lambda: subprocess.Popen(["xdg-open", "https://github.com/SajjadMohabati/clipbar"]))
         layout.addWidget(btn_gh)
 
         return w

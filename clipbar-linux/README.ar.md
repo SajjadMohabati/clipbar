@@ -12,7 +12,7 @@
 </p>
 
 <p align="center">
-  <a href="https://github.com/SajjadMohabati/clipbar-mac/releases/tag/linux-v1.0"><img src="https://img.shields.io/badge/download-1.0-7c5cff" alt="تنزيل ClipBar لنظام لينكس 1.0"></a>
+  <a href="https://github.com/SajjadMohabati/clipbar/releases/tag/linux-v1.0"><img src="https://img.shields.io/badge/download-1.0-7c5cff" alt="تنزيل ClipBar لنظام لينكس 1.0"></a>
   <img src="https://img.shields.io/badge/Ubuntu-24.04%2B-E95420?logo=ubuntu&logoColor=white" alt="أوبونتو 24.04 وأحدث">
   <img src="https://img.shields.io/badge/Debian-12%2B-A81D33?logo=debian&logoColor=white" alt="ديبيان 12 وأحدث">
   <img src="https://img.shields.io/badge/X11%20%2B%20Wayland-supported-555" alt="X11 وWayland">
@@ -109,7 +109,7 @@
 
 ### أوبونتو وديبيان (موصى به)
 
-نزّل الملف **`clipbar_1.0.0_all.deb`** من [صفحة أحدث إصدار للينكس](https://github.com/SajjadMohabati/clipbar-mac/releases/tag/linux-v1.0) وثبّته:
+نزّل الملف **`clipbar_1.0.0_all.deb`** من [صفحة أحدث إصدار للينكس](https://github.com/SajjadMohabati/clipbar/releases/tag/linux-v1.0) وثبّته:
 
 <div dir="ltr">
 
@@ -137,8 +137,8 @@ sudo apt install python3-gi gir1.2-atspi-2.0 at-spi2-core
 
 ```bash
 sudo dnf install python3-pyqt6 python3-cryptography python3-gobject at-spi2-core xdotool tesseract
-git clone https://github.com/SajjadMohabati/clipbar-mac.git
-cd clipbar-mac/clipbar-linux && ./build.sh install
+git clone https://github.com/SajjadMohabati/clipbar.git
+cd clipbar/clipbar-linux && ./build.sh install
 ```
 
 </div>
@@ -149,8 +149,8 @@ cd clipbar-mac/clipbar-linux && ./build.sh install
 
 ```bash
 sudo pacman -S python-pyqt6 python-cryptography python-gobject at-spi2-core xdotool tesseract tesseract-data-eng
-git clone https://github.com/SajjadMohabati/clipbar-mac.git
-cd clipbar-mac/clipbar-linux && ./build.sh install
+git clone https://github.com/SajjadMohabati/clipbar.git
+cd clipbar/clipbar-linux && ./build.sh install
 ```
 
 </div>
@@ -220,7 +220,7 @@ cd clipbar-linux && ./run-docker.sh
 <details>
 <summary><b>ما أفضل مدير حافظة لأوبونتو؟</b></summary>
 
-ClipBar مدير حافظة مجاني ومفتوح المصدر لأوبونتو، فيه السجل والبحث والعناصر المثبّتة والمحفوظة والقفل المشفّر ولقطات الشاشة والتعرف على النص، إضافة إلى Drafts التي تسترجع النص المكتوب المفقود. ثبّت حزمة `.deb` من [صفحة الإصدار](https://github.com/SajjadMohabati/clipbar-mac/releases/tag/linux-v1.0).
+ClipBar مدير حافظة مجاني ومفتوح المصدر لأوبونتو، فيه السجل والبحث والعناصر المثبّتة والمحفوظة والقفل المشفّر ولقطات الشاشة والتعرف على النص، إضافة إلى Drafts التي تسترجع النص المكتوب المفقود. ثبّت حزمة `.deb` من [صفحة الإصدار](https://github.com/SajjadMohabati/clipbar/releases/tag/linux-v1.0).
 </details>
 
 <details>
@@ -275,7 +275,7 @@ ClipBar مدير حافظة مجاني ومفتوح المصدر لأوبونت�
 
 من تطوير **سجاد محبتي (Sajjad Mohabati)** · [github.com/SajjadMohabati](https://github.com/SajjadMohabati)
 
-إن أفادك ClipBar، فنجمة ⭐️ على [GitHub](https://github.com/SajjadMohabati/clipbar-mac) تساعد الآخرين على العثور عليه.
+إن أفادك ClipBar، فنجمة ⭐️ على [GitHub](https://github.com/SajjadMohabati/clipbar) تساعد الآخرين على العثور عليه.
 
 ## الرخصة
 
