@@ -145,22 +145,24 @@ final class ClipStore: ObservableObject {
     // MARK: - Capture
 
     func poll() {
-        let pasteboard = NSPasteboard.general
-        guard pasteboard.changeCount != lastChangeCount else { return }
-        lastChangeCount = pasteboard.changeCount
-        guard !paused, let types = pasteboard.types,
-              !Clipboard.shouldIgnore(types, skipConcealed: settings.skipSensitive) else { return }
+        autoreleasepool {
+            let pasteboard = NSPasteboard.general
+            guard pasteboard.changeCount != lastChangeCount else { return }
+            lastChangeCount = pasteboard.changeCount
+            guard !paused, let types = pasteboard.types,
+                  !Clipboard.shouldIgnore(types, skipConcealed: settings.skipSensitive) else { return }
 
-        let source = NSWorkspace.shared.frontmostApplication?.bundleIdentifier
-        if let urls = Clipboard.fileURLs(pasteboard) {
-            let paths = urls.map(\.path)
-            insert(ClipItem(text: paths.joined(separator: "\n"), files: paths, source: source))
-        } else if let text = pasteboard.string(forType: .string) {
-            guard text.contains(where: { !$0.isWhitespace }), text.utf8.count <= Self.maxTextBytes,
-                  !(settings.skipSensitive && Clipboard.looksSensitive(text)) else { return }
-            insert(ClipItem(text: text, source: source))
-        } else if let image = Clipboard.image(pasteboard), image.data.count <= Self.maxImageBytes {
-            captureImage(image.data, isPNG: image.isPNG, source: source)
+            let source = NSWorkspace.shared.frontmostApplication?.bundleIdentifier
+            if let urls = Clipboard.fileURLs(pasteboard) {
+                let paths = urls.map(\.path)
+                insert(ClipItem(text: paths.joined(separator: "\n"), files: paths, source: source))
+            } else if let text = pasteboard.string(forType: .string) {
+                guard text.contains(where: { !$0.isWhitespace }), text.utf8.count <= Self.maxTextBytes,
+                      !(settings.skipSensitive && Clipboard.looksSensitive(text)) else { return }
+                insert(ClipItem(text: text, source: source))
+            } else if let image = Clipboard.image(pasteboard), image.data.count <= Self.maxImageBytes {
+                captureImage(image.data, isPNG: image.isPNG, source: source)
+            }
         }
     }
 
@@ -496,8 +498,10 @@ final class ClipStore: ObservableObject {
         guard history != items || kept != saved else {
             drafts = typed
             io.async {
-                if let data = try? JSONEncoder().encode(typed) {
-                    try? data.write(to: Paths.drafts, options: .atomic)
+                autoreleasepool {
+                    if let data = try? JSONEncoder().encode(typed) {
+                        try? data.write(to: Paths.drafts, options: .atomic)
+                    }
                 }
             }
             return
@@ -578,15 +582,17 @@ final class ClipStore: ObservableObject {
         let kept = saved
         let typed = drafts
         io.async {
-            ImageStore.delete(removed)
-            if let data = try? JSONEncoder().encode(typed) {
-                try? data.write(to: Paths.drafts, options: .atomic)
-            }
-            if let data = try? JSONEncoder().encode(history) {
-                try? data.write(to: Paths.history, options: .atomic)
-            }
-            if let data = try? JSONEncoder().encode(kept) {
-                try? data.write(to: Paths.saved, options: .atomic)
+            autoreleasepool {
+                ImageStore.delete(removed)
+                if let data = try? JSONEncoder().encode(typed) {
+                    try? data.write(to: Paths.drafts, options: .atomic)
+                }
+                if let data = try? JSONEncoder().encode(history) {
+                    try? data.write(to: Paths.history, options: .atomic)
+                }
+                if let data = try? JSONEncoder().encode(kept) {
+                    try? data.write(to: Paths.saved, options: .atomic)
+                }
             }
         }
     }

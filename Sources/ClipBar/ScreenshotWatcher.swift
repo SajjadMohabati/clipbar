@@ -66,10 +66,12 @@ final class ScreenshotWatcher {
     }
 
     private func scan() {
-        guard let folder else { return }
-        for url in files(in: folder) where !seen.contains(url.path) && Self.isNewScreenshot(url, since: startDate) {
-            seen.insert(url.path)
-            onScreenshot(url)
+        autoreleasepool {
+            guard let folder else { return }
+            for url in files(in: folder) where !seen.contains(url.path) && Self.isNewScreenshot(url, since: startDate) {
+                seen.insert(url.path)
+                onScreenshot(url)
+            }
         }
     }
 

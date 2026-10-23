@@ -59,7 +59,11 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
         }
 
         let timer = Timer(timeInterval: 0.5, repeats: true) { [weak self] _ in
-            MainActor.assumeIsolated { self?.store.poll() }
+            MainActor.assumeIsolated {
+                autoreleasepool {
+                    self?.store.poll()
+                }
+            }
         }
         RunLoop.main.add(timer, forMode: .common)
 
@@ -318,6 +322,15 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
 
 extension AppDelegate: NSWindowDelegate {
     func windowWillClose(_ notification: Notification) {
+        if let window = notification.object as? NSWindow {
+            if window === editorWindow {
+                editorWindow?.contentViewController = nil
+                editorWindow = nil
+            } else if window === settingsWindow {
+                settingsWindow?.contentViewController = nil
+                settingsWindow = nil
+            }
+        }
         // Hand focus back once the last ClipBar window goes away.
         let others = [editorWindow, settingsWindow].compactMap { $0 }
             .filter { $0 !== notification.object as? NSWindow && $0.isVisible }

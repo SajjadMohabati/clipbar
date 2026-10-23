@@ -109,21 +109,28 @@ enum Clipboard {
 
 /// Copied images live as PNG files named after their hash, so duplicates share one file.
 enum ImageStore {
-    @MainActor private static let thumbnails = NSCache<NSString, NSImage>()
+    @MainActor private static let thumbnails: NSCache<NSString, NSImage> = {
+        let cache = NSCache<NSString, NSImage>()
+        cache.countLimit = 60
+        cache.totalCostLimit = 6 * 1024 * 1024
+        return cache
+    }()
 
     static func url(_ name: String) -> URL {
         Paths.images.appending(path: name)
     }
 
     static func store(_ data: Data, isPNG: Bool) -> String? {
-        guard let png = isPNG ? data : NSBitmapImageRep(data: data)?.representation(using: .png, properties: [:])
-        else { return nil }
-        let name = SHA256.hash(data: png).prefix(16).map { String(format: "%02x", $0) }.joined() + ".png"
-        let url = url(name)
-        if !FileManager.default.fileExists(atPath: url.path) {
-            guard (try? png.write(to: url, options: .atomic)) != nil else { return nil }
+        autoreleasepool {
+            guard let png = isPNG ? data : NSBitmapImageRep(data: data)?.representation(using: .png, properties: [:])
+            else { return nil }
+            let name = SHA256.hash(data: png).prefix(16).map { String(format: "%02x", $0) }.joined() + ".png"
+            let url = url(name)
+            if !FileManager.default.fileExists(atPath: url.path) {
+                guard (try? png.write(to: url, options: .atomic)) != nil else { return nil }
+            }
+            return name
         }
-        return name
     }
 
     @MainActor
@@ -136,8 +143,9 @@ enum ImageStore {
         ] as CFDictionary
         guard let source = CGImageSourceCreateWithURL(url(name) as CFURL, nil),
               let image = CGImageSourceCreateThumbnailAtIndex(source, 0, options) else { return nil }
-        let thumbnail = NSImage(cgImage: image, size: .zero)
-        thumbnails.setObject(thumbnail, forKey: name as NSString)
+        // Half the pixel size in points: sharp on Retina and in the image's own proportions.
+        let thumbnail = NSImage(cgImage: image, size: NSSize(width: image.width / 2, height: image.height / 2))
+        thumbnails.setObject(thumbnail, forKey: name as NSString, cost: image.width * image.height * 4)
         return thumbnail
     }
 
@@ -173,16 +181,23 @@ enum Icons {
     }
 
     private static var apps: [String: App?] = [:]
-    private static let files = NSCache<NSString, NSImage>()
+    private static let files: NSCache<NSString, NSImage> = {
+        let cache = NSCache<NSString, NSImage>()
+        cache.countLimit = 40
+        cache.totalCostLimit = 1 * 1024 * 1024
+        return cache
+    }()
 
     static func app(_ bundleID: String?) -> App? {
         guard let bundleID else { return nil }
         if let cached = apps[bundleID] { return cached }
         let app = NSWorkspace.shared.urlForApplication(withBundleIdentifier: bundleID).map { url in
             let name = FileManager.default.displayName(atPath: url.path)
+            let icon = NSWorkspace.shared.icon(forFile: url.path)
+            icon.size = NSSize(width: 24, height: 24)
             return App(
                 name: name.hasSuffix(".app") ? String(name.dropLast(4)) : name,
-                icon: NSWorkspace.shared.icon(forFile: url.path)
+                icon: icon
             )
         }
         apps[bundleID] = app
@@ -192,7 +207,8 @@ enum Icons {
     static func file(_ path: String) -> NSImage {
         if let cached = files.object(forKey: path as NSString) { return cached }
         let icon = NSWorkspace.shared.icon(forFile: path)
-        files.setObject(icon, forKey: path as NSString)
+        icon.size = NSSize(width: 32, height: 32)
+        files.setObject(icon, forKey: path as NSString, cost: 32 * 32 * 4)
         return icon
     }
 }

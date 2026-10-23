@@ -61,51 +61,53 @@ final class DraftWatcher {
     }
 
     private func check() {
-        guard AXIsProcessTrusted(), !store.paused,
-              let app = NSWorkspace.shared.frontmostApplication,
-              app.processIdentifier != ProcessInfo.processInfo.processIdentifier,
-              let bundleID = app.bundleIdentifier,
-              !Self.skippedApps.contains(bundleID) else { return forget() }
-        let application = AXUIElementCreateApplication(app.processIdentifier)
-        prepare(application, pid: app.processIdentifier, bundleID: bundleID)
+        autoreleasepool {
+            guard AXIsProcessTrusted(), !store.paused,
+                  let app = NSWorkspace.shared.frontmostApplication,
+                  app.processIdentifier != ProcessInfo.processInfo.processIdentifier,
+                  let bundleID = app.bundleIdentifier,
+                  !Self.skippedApps.contains(bundleID) else { return forget() }
+            let application = AXUIElementCreateApplication(app.processIdentifier)
+            prepare(application, pid: app.processIdentifier, bundleID: bundleID)
 
-        // No focused element usually means a menu or dialog is in the way; keep the session.
-        guard let element = focusedElement(of: application) else { return }
+            // No focused element usually means a menu or dialog is in the way; keep the session.
+            guard let element = focusedElement(of: application) else { return }
 
-        guard let role = string(kAXRoleAttribute, of: element), Self.textRoles.contains(role),
-              string(kAXSubroleAttribute, of: element) != kAXSecureTextFieldSubrole as String,
-              string(kAXSubroleAttribute, of: element) != kAXSearchFieldSubrole as String,
-              let text = text(of: element) else { return forget() }
+            guard let role = string(kAXRoleAttribute, of: element), Self.textRoles.contains(role),
+                  string(kAXSubroleAttribute, of: element) != kAXSecureTextFieldSubrole as String,
+                  string(kAXSubroleAttribute, of: element) != kAXSearchFieldSubrole as String,
+                  let text = text(of: element) else { return forget() }
 
-        guard let field, CFEqual(field, element) else {
-            // Web and Electron apps hand out a new element for the same field now and then;
-            // if the text carries on from what was there, it's still the same message.
-            if !last.isEmpty, text.continues(last) {
+            guard let field, CFEqual(field, element) else {
+                // Web and Electron apps hand out a new element for the same field now and then;
+                // if the text carries on from what was there, it's still the same message.
+                if !last.isEmpty, text.continues(last) {
+                    field = element
+                    return
+                }
+                // A different field: whatever is already in it isn't something being typed now.
+                forget()
                 field = element
+                last = text
+                peak = text.count
                 return
             }
-            // A different field: whatever is already in it isn't something being typed now.
-            forget()
-            field = element
+            guard text != last else { return }
             last = text
-            peak = text.count
-            return
-        }
-        guard text != last else { return }
-        last = text
 
-        // Sent, cleared or wiped: the draft keeps the full text, and what follows is a new one.
-        if text.count * 2 < peak {
-            draft = nil
-            peak = text.count
-        }
-        peak = max(peak, text.count)
+            // Sent, cleared or wiped: the draft keeps the full text, and what follows is a new one.
+            if text.count * 2 < peak {
+                draft = nil
+                peak = text.count
+            }
+            peak = max(peak, text.count)
 
-        let settings = Settings.shared
-        let typed = text.trimmingCharacters(in: .whitespacesAndNewlines)
-        guard typed.count >= settings.draftMinLength,
-              !(settings.skipSensitive && Clipboard.looksSensitive(typed)) else { return }
-        draft = store.recordDraft(draft, text: typed, source: bundleID)
+            let settings = Settings.shared
+            let typed = text.trimmingCharacters(in: .whitespacesAndNewlines)
+            guard typed.count >= settings.draftMinLength,
+                  !(settings.skipSensitive && Clipboard.looksSensitive(typed)) else { return }
+            draft = store.recordDraft(draft, text: typed, source: bundleID)
+        }
     }
 
     private func focusedElement(of application: AXUIElement) -> AXUIElement? {
