@@ -1,0 +1,14 @@
+version: '3.8'
+
+services:
+  clipbar:
+    build:
+      context: .
+      dockerfile: docker/Dockerfile
+    container_name: clipbar-linux
+    ports:
+      - "127.0.0.1:6080:6080"
+    environment:
+      - RESOLUTION=2560x1600
+      - UI_SCALE=2
+    restart: unless-stopped

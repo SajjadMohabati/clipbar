@@ -1,0 +1,79 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="512" height="512">
+  <defs>
+    <!-- Background Aurora Gradient -->
+    <linearGradient id="aurora" x1="0%" y1="100%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#12182e"/>
+      <stop offset="45%" stop-color="#2a1854"/>
+      <stop offset="75%" stop-color="#1c3a63"/>
+      <stop offset="100%" stop-color="#0e2a38"/>
+    </linearGradient>
+
+    <!-- Glowing Blob 1 -->
+    <radialGradient id="blob1" cx="35%" cy="30%" r="50%">
+      <stop offset="0%" stop-color="#8a5cf6" stop-opacity="0.9"/>
+      <stop offset="100%" stop-color="#8a5cf6" stop-opacity="0"/>
+    </radialGradient>
+
+    <!-- Glowing Blob 2 -->
+    <radialGradient id="blob2" cx="80%" cy="40%" r="45%">
+      <stop offset="0%" stop-color="#38bdf8" stop-opacity="0.8"/>
+      <stop offset="100%" stop-color="#38bdf8" stop-opacity="0"/>
+    </radialGradient>
+
+    <!-- Glowing Blob 3 -->
+    <radialGradient id="blob3" cx="60%" cy="80%" r="50%">
+      <stop offset="0%" stop-color="#f472b6" stop-opacity="0.75"/>
+      <stop offset="100%" stop-color="#f472b6" stop-opacity="0"/>
+    </radialGradient>
+
+    <!-- Glass Specular Highlight -->
+    <linearGradient id="glassSheen" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#ffffff" stop-opacity="0.45"/>
+      <stop offset="40%" stop-color="#ffffff" stop-opacity="0.08"/>
+      <stop offset="100%" stop-color="#ffffff" stop-opacity="0.0"/>
+    </linearGradient>
+
+    <!-- Glass Border Gradient -->
+    <linearGradient id="glassBorder" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#ffffff" stop-opacity="0.9"/>
+      <stop offset="40%" stop-color="#ffffff" stop-opacity="0.25"/>
+      <stop offset="100%" stop-color="#ffffff" stop-opacity="0.05"/>
+    </linearGradient>
+
+    <!-- Soft Drop Shadow -->
+    <filter id="glassShadow" x="-20%" y="-20%" width="140%" height="140%">
+      <feDropShadow dx="0" dy="16" stdDeviation="24" flood-color="#000000" flood-opacity="0.45"/>
+    </filter>
+  </defs>
+
+  <!-- App Tile Background -->
+  <rect x="40" y="40" width="432" height="432" rx="100" fill="url(#aurora)"/>
+  <rect x="40" y="40" width="432" height="432" rx="100" fill="url(#blob1)"/>
+  <rect x="40" y="40" width="432" height="432" rx="100" fill="url(#blob2)"/>
+  <rect x="40" y="40" width="432" height="432" rx="100" fill="url(#blob3)"/>
+
+  <!-- Frosted Glass Clipboard Card (Back) -->
+  <g transform="rotate(-6 256 256)">
+    <rect x="140" y="115" width="220" height="290" rx="34" fill="#ffffff" fill-opacity="0.12" filter="url(#glassShadow)"/>
+    <rect x="140" y="115" width="220" height="290" rx="34" fill="none" stroke="url(#glassBorder)" stroke-width="1.8"/>
+  </g>
+
+  <!-- Frosted Glass Clipboard Card (Front) -->
+  <g transform="rotate(3 256 256)">
+    <rect x="146" y="120" width="220" height="290" rx="34" fill="#ffffff" fill-opacity="0.22" filter="url(#glassShadow)"/>
+    <rect x="146" y="120" width="220" height="290" rx="34" fill="url(#glassSheen)"/>
+    <rect x="146" y="120" width="220" height="290" rx="34" fill="none" stroke="url(#glassBorder)" stroke-width="2.5"/>
+
+    <!-- Clip Bar Top Element -->
+    <rect x="206" y="100" width="100" height="38" rx="14" fill="#ffffff" fill-opacity="0.45" stroke="#ffffff" stroke-width="2" filter="url(#glassShadow)"/>
+    <circle cx="256" cy="119" r="6" fill="#12182e"/>
+
+    <!-- Document Lines inside Card -->
+    <rect x="180" y="170" width="90" height="12" rx="6" fill="#ffffff" fill-opacity="0.85"/>
+    <rect x="180" y="200" width="150" height="10" rx="5" fill="#ffffff" fill-opacity="0.5"/>
+    <rect x="180" y="224" width="130" height="10" rx="5" fill="#ffffff" fill-opacity="0.5"/>
+    <rect x="180" y="248" width="140" height="10" rx="5" fill="#ffffff" fill-opacity="0.5"/>
+    <rect x="180" y="280" width="110" height="10" rx="5" fill="#38bdf8" fill-opacity="0.8"/>
+    <rect x="180" y="304" width="145" height="10" rx="5" fill="#ffffff" fill-opacity="0.5"/>
+  </g>
+</svg>

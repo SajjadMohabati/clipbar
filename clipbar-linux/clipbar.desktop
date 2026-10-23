@@ -1,0 +1,13 @@
+[Desktop Entry]
+Version=1.0
+Type=Application
+Name=ClipBar
+GenericName=Clipboard Manager
+Comment=Clipboard manager that never loses what you type
+Exec=clipbar
+Icon=clipbar
+Terminal=false
+Categories=Utility;
+Keywords=clipboard;paste;history;drafts;ocr;
+StartupNotify=false
+X-GNOME-Autostart-enabled=true

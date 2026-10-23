@@ -1,0 +1,27 @@
+[build-system]
+requires = ["setuptools>=61.0"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "clipbar"
+version = "1.0.0"
+description = "Clipboard manager for Linux that never loses what you type"
+readme = "README.md"
+authors = [{ name = "Sajjad Mohabati" }]
+license = { text = "MIT" }
+requires-python = ">=3.8"
+dependencies = [
+    "PyQt6>=6.4.0",
+    "cryptography>=3.4",
+]
+
+[project.optional-dependencies]
+all = [
+    "PyGObject>=3.42",
+    "pytesseract>=0.3.10",
+    "Pillow>=9.0.0",
+    "pynput>=1.7.6",
+]
+
+[project.scripts]
+clipbar = "clipbar.main:main"

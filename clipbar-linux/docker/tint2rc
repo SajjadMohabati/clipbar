@@ -1,0 +1,48 @@
+# Tint2 panel configuration for ClipBar
+panel_position = top center horizontal
+panel_size = 100% 68
+panel_margin = 0 0
+panel_padding = 8 3 8
+panel_background_id = 1
+panel_dock = 0
+
+# Background 1: Glass dark topbar
+rounded = 0
+border_width = 1
+background_color = #13171f 220
+border_color = #2b3240 160
+
+# Background 2: Active items
+rounded = 4
+border_width = 1
+background_color = #222938 180
+border_color = #3d475a 180
+
+# Panel items: Launcher / Taskbar, System Tray, Clock
+panel_items = TSF
+
+# Taskbar
+taskbar_mode = single_desktop
+taskbar_padding = 4 2 4
+taskbar_background_id = 0
+taskbar_active_background_id = 2
+task_icon = 1
+task_text = 1
+task_maximum_size = 360 52
+task_font = Inter 20
+task_font_color = #e0e6ed 180
+task_active_font_color = #ffffff 255
+
+# System Tray (where ClipBar lives)
+systray_padding = 6 3 10
+systray_background_id = 0
+systray_sort = ascending
+systray_icon_size = 40
+systray_icon_as_icon = 1
+
+# Clock
+time1_format = %H:%M
+time1_font = Inter 20
+time1_color = #cbd5e1 200
+clock_padding = 6 2
+clock_background_id = 0
