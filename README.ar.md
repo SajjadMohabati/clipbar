@@ -14,7 +14,7 @@
 <p align="center">
   <a href="https://github.com/SajjadMohabati/clipbar/releases/latest"><img src="https://img.shields.io/github/v/release/SajjadMohabati/clipbar?label=download&color=7c5cff" alt="تنزيل أحدث إصدار"></a>
   <img src="https://img.shields.io/badge/macOS-26%20Tahoe-black?logo=apple" alt="macOS 26 Tahoe">
-  <a href="https://github.com/SajjadMohabati/clipbar/releases/tag/linux-v1.0"><img src="https://img.shields.io/badge/Linux-1.0-FCC624?logo=linux&logoColor=black" alt="ClipBar لنظام لينكس 1.0"></a>
+  <a href="https://github.com/SajjadMohabati/clipbar/releases/tag/linux-v1.0.1"><img src="https://img.shields.io/badge/Linux-1.0.1-FCC624?logo=linux&logoColor=black" alt="ClipBar لنظام لينكس 1.0.1"></a>
   <img src="https://img.shields.io/badge/Apple%20silicon%20%2B%20Intel-universal-555" alt="Apple Silicon و Intel">
   <a href="LICENSE"><img src="https://img.shields.io/github/license/SajjadMohabati/clipbar?color=2ea44f" alt="رخصة MIT"></a>
   <a href="https://github.com/SajjadMohabati/clipbar/stargazers"><img src="https://img.shields.io/github/stars/SajjadMohabati/clipbar?style=social" alt="نجوم GitHub"></a>
@@ -93,13 +93,13 @@
 - 🫧 **تصميم Liquid Glass:** واجهة زجاجية أصيلة لنظام macOS Tahoe، مع حركات سلسة ووضعين فاتح وداكن.
 - 🛡 **خصوصية تامة:** بلا حساب، بلا سحابة، بلا تتبّع، وبلا أي اتصال بالإنترنت. كل بياناتك تبقى على جهازك.
 - 🪶 **خفيف ونظيف:** نحو 3000 سطر من لغة Swift، دون أي مكتبات خارجية، ويعمل على جميع أجهزة ماك. الإصدار 2.4 يحرّر الذاكرة فور انتهاء كل فحص ويضع حدًّا لذاكرة الصور المؤقتة، فيبقى خفيفًا طوال اليوم.
-- 🐧 **على لينكس أيضًا:** [ClipBar لنظام لينكس](#linux) يقدّم السجل نفسه وميزة Drafts والعناصر المحفوظة والتصميم الزجاجي على أوبونتو وديبيان وغيرهما من التوزيعات.
+- 🐧 **على لينكس أيضًا:** [ClipBar لنظام لينكس](#linux) يقدّم السجل نفسه وميزة Drafts والعناصر المحفوظة والثيم الداكن على أوبونتو وديبيان وغيرهما من التوزيعات.
 - 🆓 **مجاني ومفتوح المصدر:** بلا اشتراك وبلا مشتريات داخل التطبيق.
 
 ## ما الجديد
 
 - **الإصدار 2.4 (ماك):** استهلاك أقل للذاكرة، وتظهر الصور المصغّرة بنسبها الحقيقية بدل ضغطها داخل مربع.
-- **لينكس 1.0:** [أول إصدار من ClipBar لنظام لينكس](https://github.com/SajjadMohabati/clipbar/releases/tag/linux-v1.0)، مع حزمة `.deb` لأوبونتو وديبيان.
+- **لينكس 1.0.1:** إصلاح ثيم لينكس (معتم بدل الزجاجي)، وفتح اللوحة مباشرة من أيقونة شريط النظام، ومنع تكرار لقطات الشاشة واللصق.
 - **الإصدار 2.3 (ماك):** ميزة [Drafts](#drafts)، فلا تفقد ما كتبته بعد اليوم.
 
 <a id="features"></a>
@@ -160,7 +160,7 @@
 ## ClipBar لنظام لينكس
 
 <p align="center">
-  <img src="docs/linux-panel.png" width="400" alt="مدير الحافظة ClipBar لنظام لينكس بتصميم زجاجي على أوبونتو">
+  <img src="docs/linux-panel.png" width="400" alt="مدير الحافظة ClipBar لنظام لينكس بثيم داكن على أوبونتو">
 </p>
 
 مدير الحافظة نفسه، مصمَّم هذه المرة لسطح مكتب لينكس، ومبني بلغة Python وQt 6. المظهر نفسه، والتبويبات نفسها، والعمل السريع نفسه بلوحة المفاتيح كما في نسخة ماك.
@@ -176,12 +176,12 @@
 | اللصق المباشر | ✅ | ✅ عبر xdotool، أو wtype / ydotool على Wayland |
 | اختصار الفتح | `⇧⌘V` | `Ctrl+Shift+V` |
 
-**التثبيت على أوبونتو أو ديبيان:** نزّل الملف `clipbar_1.0.0_all.deb` من [صفحة إصدار لينكس 1.0](https://github.com/SajjadMohabati/clipbar/releases/tag/linux-v1.0)، ثم:
+**التثبيت على أوبونتو أو ديبيان:** نزّل الملف `clipbar_1.0.1_all.deb` من [صفحة إصدار لينكس 1.0.1](https://github.com/SajjadMohabati/clipbar/releases/tag/linux-v1.0.1)، ثم:
 
 <div dir="ltr">
 
 ```bash
-sudo apt install ./clipbar_1.0.0_all.deb
+sudo apt install ./clipbar_1.0.1_all.deb
 ```
 
 </div>
@@ -322,7 +322,7 @@ cd clipbar
 <details>
 <summary><b>هل يوجد إصدار من ClipBar لنظام لينكس؟</b></summary>
 
-نعم. [ClipBar لنظام لينكس](#linux) يتضمن سجل الحافظة وميزة Drafts والعناصر المحفوظة والمقفلة ولقطات الشاشة واستخراج النص من الصور. على أوبونتو وديبيان ثبّت حزمة `.deb` من [صفحة إصدار لينكس](https://github.com/SajjadMohabati/clipbar/releases/tag/linux-v1.0)، أو شغّله من المصدر على التوزيعات الأخرى.
+نعم. [ClipBar لنظام لينكس](#linux) يتضمن سجل الحافظة وميزة Drafts والعناصر المحفوظة والمقفلة ولقطات الشاشة واستخراج النص من الصور. على أوبونتو وديبيان ثبّت حزمة `.deb` من [صفحة إصدار لينكس](https://github.com/SajjadMohabati/clipbar/releases/tag/linux-v1.0.1)، أو شغّله من المصدر على التوزيعات الأخرى.
 </details>
 
 <details>

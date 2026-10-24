@@ -14,7 +14,7 @@
 <p align="center">
   <a href="https://github.com/SajjadMohabati/clipbar/releases/latest"><img src="https://img.shields.io/github/v/release/SajjadMohabati/clipbar?label=download&color=7c5cff" alt="دانلود آخرین نسخه"></a>
   <img src="https://img.shields.io/badge/macOS-26%20Tahoe-black?logo=apple" alt="macOS 26 Tahoe">
-  <a href="https://github.com/SajjadMohabati/clipbar/releases/tag/linux-v1.0"><img src="https://img.shields.io/badge/Linux-1.0-FCC624?logo=linux&logoColor=black" alt="کلیپ‌بار برای لینوکس ۱.۰"></a>
+  <a href="https://github.com/SajjadMohabati/clipbar/releases/tag/linux-v1.0.1"><img src="https://img.shields.io/badge/Linux-1.0.1-FCC624?logo=linux&logoColor=black" alt="کلیپ‌بار برای لینوکس ۱.۰.۱"></a>
   <img src="https://img.shields.io/badge/Apple%20silicon%20%2B%20Intel-universal-555" alt="Apple Silicon و Intel">
   <a href="LICENSE"><img src="https://img.shields.io/github/license/SajjadMohabati/clipbar?color=2ea44f" alt="لایسنس MIT"></a>
   <a href="https://github.com/SajjadMohabati/clipbar/stargazers"><img src="https://img.shields.io/github/stars/SajjadMohabati/clipbar?style=social" alt="ستاره‌های گیت‌هاب"></a>
@@ -93,13 +93,13 @@
 - 🫧 **طراحی Liquid Glass:** رابط کاربری شیشه‌ای و بومی macOS Tahoe، با انیمیشن‌های نرم و حالت روشن و تاریک.
 - 🛡 **حریم خصوصی کامل:** بدون حساب کاربری، بدون فضای ابری، بدون آمارگیری و بدون حتی یه درخواست اینترنتی. همه‌چیز روی مک خودت می‌مونه.
 - 🪶 **سبک و تمیز:** حدود ۳ هزار خط کد Swift، بدون هیچ کتابخونه‌ی جانبی، برای همه‌ی مک‌ها. نسخه‌ی ۲.۴ حافظه رو بعد از هر بررسی فوراً آزاد می‌کنه و برای کش عکس‌ها سقف داره، پس کل روز سبک می‌مونه.
-- 🐧 **روی لینوکس هم هست:** [کلیپ‌بار برای لینوکس](#linux) همین تاریخچه، Drafts، آیتم‌های ذخیره‌شده و طراحی شیشه‌ای رو به اوبونتو، دبیان و بقیه‌ی توزیع‌ها میاره.
+- 🐧 **روی لینوکس هم هست:** [کلیپ‌بار برای لینوکس](#linux) همین تاریخچه، Drafts، آیتم‌های ذخیره‌شده و تم تیره رو به اوبونتو، دبیان و بقیه‌ی توزیع‌ها میاره.
 - 🆓 **رایگان و متن‌باز:** بدون اشتراک و بدون خرید درون‌برنامه‌ای.
 
 ## چه خبر؟
 
 - **نسخه‌ی ۲.۴ (مک):** مصرف حافظه‌ی کمتر، و تصویرهای کوچیک عکس‌ها با همون نسبت واقعی‌شون نشون داده می‌شن، نه فشرده توی یه مربع.
-- **لینوکس ۱.۰:** [اولین نسخه‌ی کلیپ‌بار برای لینوکس](https://github.com/SajjadMohabati/clipbar/releases/tag/linux-v1.0)، با بسته‌ی `.deb` برای اوبونتو و دبیان.
+- **لینوکس ۱.۰.۱:** رفع تم لینوکس (مات به‌جای شیشه‌ای)، باز شدن مستقیم پنل از آیکون سینی‌بار، و جلوگیری از دوتایی شدن اسکرین‌شات و paste.
 - **نسخه‌ی ۲.۳ (مک):** قابلیت [Drafts](#drafts)، که دیگه متنی که تایپ کردی گم نشه.
 
 <a id="features"></a>
@@ -160,7 +160,7 @@
 ## کلیپ‌بار برای لینوکس
 
 <p align="center">
-  <img src="docs/linux-panel.png" width="400" alt="کلیپ‌بورد منیجر کلیپ‌بار برای لینوکس با طراحی شیشه‌ای روی اوبونتو">
+  <img src="docs/linux-panel.png" width="400" alt="کلیپ‌بورد منیجر کلیپ‌بار برای لینوکس با تم تیره روی اوبونتو">
 </p>
 
 همون کلیپ‌بورد منیجر، این بار برای دسکتاپ لینوکس، ساخته‌شده با Python و Qt 6. همون ظاهر، همون تب‌ها و همون کار سریع با کیبورد که توی نسخه‌ی مک هست.
@@ -176,12 +176,12 @@
 | پیست مستقیم | ✅ | ✅ با xdotool، یا wtype / ydotool روی Wayland |
 | میانبر باز کردن | `⇧⌘V` | `Ctrl+Shift+V` |
 
-**نصب روی اوبونتو یا دبیان:** فایل `clipbar_1.0.0_all.deb` رو از [صفحه‌ی نسخه‌ی لینوکس ۱.۰](https://github.com/SajjadMohabati/clipbar/releases/tag/linux-v1.0) دانلود کن و بعد:
+**نصب روی اوبونتو یا دبیان:** فایل `clipbar_1.0.1_all.deb` رو از [صفحه‌ی نسخه‌ی لینوکس ۱.۰.۱](https://github.com/SajjadMohabati/clipbar/releases/tag/linux-v1.0.1) دانلود کن و بعد:
 
 <div dir="ltr">
 
 ```bash
-sudo apt install ./clipbar_1.0.0_all.deb
+sudo apt install ./clipbar_1.0.1_all.deb
 ```
 
 </div>
@@ -322,7 +322,7 @@ macOS اسکرین‌شات رو فقط بعد از بسته شدن اون پی�
 <details>
 <summary><b>کلیپ‌بار نسخه‌ی لینوکس داره؟</b></summary>
 
-بله. [کلیپ‌بار برای لینوکس](#linux) تاریخچه‌ی کلیپ‌بورد، Drafts، آیتم‌های ذخیره‌شده و قفل‌دار، اسکرین‌شات و OCR رو داره. روی اوبونتو و دبیان فایل `.deb` رو از [صفحه‌ی نسخه‌ی لینوکس](https://github.com/SajjadMohabati/clipbar/releases/tag/linux-v1.0) نصب کن، یا روی بقیه‌ی توزیع‌ها از سورس اجراش کن.
+بله. [کلیپ‌بار برای لینوکس](#linux) تاریخچه‌ی کلیپ‌بورد، Drafts، آیتم‌های ذخیره‌شده و قفل‌دار، اسکرین‌شات و OCR رو داره. روی اوبونتو و دبیان فایل `.deb` رو از [صفحه‌ی نسخه‌ی لینوکس](https://github.com/SajjadMohabati/clipbar/releases/tag/linux-v1.0.1) نصب کن، یا روی بقیه‌ی توزیع‌ها از سورس اجراش کن.
 </details>
 
 <details>

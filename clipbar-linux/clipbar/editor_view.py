@@ -17,7 +17,7 @@ from clipbar.qt import (
     QIcon, Qt, QSplitter
 )
 from clipbar.store import ClipItem, ClipStore
-from clipbar.styles import LIQUID_GLASS_QSS, get_icon, switch_qss
+from clipbar.styles import CLIPBAR_QSS, get_icon, switch_qss
 from clipbar.transforms import TextTransform
 
 
@@ -57,7 +57,7 @@ class EditorView(QMainWindow):
 
         self.setWindowTitle(f"ClipBar — {self._get_title()}")
         self.resize(900, 600)
-        self.setStyleSheet(LIQUID_GLASS_QSS + switch_qss())
+        self.setStyleSheet(CLIPBAR_QSS + switch_qss())
 
         self._init_ui()
 
@@ -105,7 +105,7 @@ class EditorView(QMainWindow):
         # 1. Top Toolbar
         toolbar = QFrame()
         toolbar.setObjectName("EditorToolbar")
-        toolbar.setStyleSheet("QFrame#EditorToolbar { background: rgba(30, 36, 46, 0.95); border-bottom: 1px solid rgba(255, 255, 255, 0.12); }")
+        toolbar.setStyleSheet("QFrame#EditorToolbar { background: #1e242e; border-bottom: 1px solid #32373e; }")
         tb_layout = QHBoxLayout(toolbar)
         tb_layout.setContentsMargins(12, 6, 12, 6)
         tb_layout.setSpacing(8)
@@ -122,7 +122,7 @@ class EditorView(QMainWindow):
             btn_transform.setProperty("class", "GlassIconButton")
             btn_transform.setIcon(get_icon("wand", "#ced4da"))
             btn_transform.setStyleSheet(
-                "background: rgba(255, 255, 255, 0.1); border: 1px solid rgba(255, 255, 255, 0.2);"
+                "background: #2d333a; border: 1px solid #454950;"
                 "border-radius: 8px; padding: 5px 10px; color: #ffffff; font-size: 12px;"
             )
             transform_menu = QMenu(self)
@@ -175,7 +175,7 @@ class EditorView(QMainWindow):
         # Paste button
         btn_paste = QPushButton("Paste ↵")
         btn_paste.setStyleSheet(
-            "background: rgba(64, 150, 255, 0.85); color: #ffffff; border: none;"
+            "background: #3a84de; color: #ffffff; border: none;"
             "border-radius: 8px; padding: 6px 14px; font-weight: 600;"
         )
         btn_paste.clicked.connect(self._do_paste)
@@ -185,7 +185,7 @@ class EditorView(QMainWindow):
 
         # 2. Main Content Splitter (Left: Editor, Right: Inspector)
         splitter = QSplitter(Qt.Orientation.Horizontal)
-        splitter.setStyleSheet("QSplitter::handle { background: rgba(255, 255, 255, 0.1); width: 1px; }")
+        splitter.setStyleSheet("QSplitter::handle { background: #2d333a; width: 1px; }")
 
         # Left: Content
         left_widget = self._create_content_widget()
@@ -201,18 +201,18 @@ class EditorView(QMainWindow):
         # 3. Bottom Bar
         bottom_bar = QFrame()
         bottom_bar.setObjectName("EditorBottomBar")
-        bottom_bar.setStyleSheet("QFrame#EditorBottomBar { background: rgba(30, 36, 46, 0.95); border-top: 1px solid rgba(255, 255, 255, 0.12); }")
+        bottom_bar.setStyleSheet("QFrame#EditorBottomBar { background: #1e242e; border-top: 1px solid #32373e; }")
         bb_layout = QHBoxLayout(bottom_bar)
         bb_layout.setContentsMargins(16, 8, 16, 8)
 
         self.lbl_dirty = QLabel("Edit the text, then press Save.")
-        self.lbl_dirty.setStyleSheet("color: rgba(255, 255, 255, 0.5); font-size: 12px;")
+        self.lbl_dirty.setStyleSheet("color: #8a8e92; font-size: 12px;")
         bb_layout.addWidget(self.lbl_dirty)
         bb_layout.addStretch()
 
         self.btn_cancel = QPushButton("Cancel")
         self.btn_cancel.setStyleSheet(
-            "background: rgba(255, 255, 255, 0.1); color: #ffffff; border: 1px solid rgba(255, 255, 255, 0.16);"
+            "background: #2d333a; color: #ffffff; border: 1px solid #3b4047;"
             "border-radius: 8px; padding: 6px 14px;"
         )
         self.btn_cancel.clicked.connect(self.close)
@@ -221,7 +221,7 @@ class EditorView(QMainWindow):
         self.btn_save = QPushButton("Save")
         self.btn_save.setToolTip("Save and close (Ctrl+S)")
         self.btn_save.setStyleSheet(
-            "background: rgba(64, 150, 255, 0.85); color: #ffffff; border: none;"
+            "background: #3a84de; color: #ffffff; border: none;"
             "border-radius: 8px; padding: 6px 18px; font-weight: 600;"
         )
         self.btn_save.clicked.connect(self._do_save)
@@ -229,7 +229,7 @@ class EditorView(QMainWindow):
 
         self.btn_done = QPushButton("Done")
         self.btn_done.setStyleSheet(
-            "background: rgba(64, 150, 255, 0.85); color: #ffffff; border: none;"
+            "background: #3a84de; color: #ffffff; border: none;"
             "border-radius: 8px; padding: 6px 18px; font-weight: 600;"
         )
         self.btn_done.clicked.connect(self.close)
@@ -247,8 +247,8 @@ class EditorView(QMainWindow):
             self.text_editor = QTextEdit()
             self.text_editor.setText(self._draft_text)
             self.text_editor.setStyleSheet(
-                "background: rgba(20, 24, 32, 0.95); border: none; padding: 16px; color: #ffffff;"
-                "font-size: 14px; line-height: 1.5; selection-background-color: rgba(64, 150, 255, 0.6);"
+                "background: #141820; border: none; padding: 16px; color: #ffffff;"
+                "font-size: 14px; line-height: 1.5; selection-background-color: #2f65a7;"
             )
             # RTL layout detection for Persian, Arabic, Hebrew
             if is_rtl(self._draft_text):
@@ -262,7 +262,7 @@ class EditorView(QMainWindow):
         elif self.item.kind == "image" and self.item.image:
             scroll = QScrollArea()
             scroll.setWidgetResizable(True)
-            scroll.setStyleSheet("background: rgba(18, 22, 28, 0.95); border: none;")
+            scroll.setStyleSheet("background: #12161c; border: none;")
 
             img_container = QWidget()
             img_layout = QVBoxLayout(img_container)
@@ -290,7 +290,7 @@ class EditorView(QMainWindow):
 
             for fp in self.item.files:
                 row = QFrame()
-                row.setStyleSheet("background: rgba(255, 255, 255, 0.05); border-radius: 8px; padding: 8px;")
+                row.setStyleSheet("background: #22272f; border-radius: 8px; padding: 8px;")
                 r_box = QHBoxLayout(row)
                 icon_lbl = QLabel()
                 icon = Icons.file_icon(fp)
@@ -303,13 +303,13 @@ class EditorView(QMainWindow):
                 name_lbl = QLabel(p.name)
                 name_lbl.setStyleSheet("font-size: 13px; font-weight: 600; color: #ffffff;")
                 path_lbl = QLabel(fp)
-                path_lbl.setStyleSheet("font-size: 11px; color: rgba(255, 255, 255, 0.5);")
+                path_lbl.setStyleSheet("font-size: 11px; color: #8a8e92;")
                 info_box.addWidget(name_lbl)
                 info_box.addWidget(path_lbl)
                 r_box.addLayout(info_box, 1)
 
                 btn_open = QPushButton("Show in File Manager")
-                btn_open.setStyleSheet("background: rgba(255, 255, 255, 0.1); border-radius: 6px; padding: 4px 8px; color: #ffffff; font-size: 11px;")
+                btn_open.setStyleSheet("background: #2d333a; border-radius: 6px; padding: 4px 8px; color: #ffffff; font-size: 11px;")
                 btn_open.clicked.connect(lambda checked, pth=fp: subprocess.Popen(["xdg-open", str(Path(pth).parent)]))
                 r_box.addWidget(btn_open)
 
@@ -325,7 +325,7 @@ class EditorView(QMainWindow):
         scroll = QScrollArea()
         scroll.setWidgetResizable(True)
         scroll.setObjectName("Inspector")
-        scroll.setStyleSheet("QScrollArea#Inspector, QScrollArea#Inspector > QWidget > QWidget { background: rgba(26, 32, 42, 0.95); border: none; }")
+        scroll.setStyleSheet("QScrollArea#Inspector, QScrollArea#Inspector > QWidget > QWidget { background: #1a202a; border: none; }")
 
         container = QWidget()
         layout = QVBoxLayout(container)
@@ -341,7 +341,7 @@ class EditorView(QMainWindow):
             self.saved_title_input = QLineEdit(self._saved_title)
             self.saved_title_input.setPlaceholderText("Title, e.g. Bank name")
             self.saved_title_input.setStyleSheet(
-                "background: rgba(255, 255, 255, 0.08); border: 1px solid rgba(255, 255, 255, 0.15);"
+                "background: #292e36; border: 1px solid #393e45;"
                 "border-radius: 6px; padding: 6px; color: #ffffff; font-size: 12px;"
             )
             self.saved_title_input.textChanged.connect(self._on_title_edited)
@@ -350,7 +350,7 @@ class EditorView(QMainWindow):
             if self.is_text:
                 self.check_locked = QCheckBox("Lock with password")
                 self.check_locked.setChecked(self._locked)
-                self.check_locked.setStyleSheet("color: rgba(255, 255, 255, 0.85); font-size: 11px;")
+                self.check_locked.setStyleSheet("color: #dcddde; font-size: 11px;")
                 self.check_locked.toggled.connect(self._on_locked_toggled)
                 s_layout.addWidget(self.check_locked)
 
@@ -362,7 +362,7 @@ class EditorView(QMainWindow):
             c_layout = QVBoxLayout(sec_color)
             swatch = QFrame()
             swatch.setFixedHeight(60)
-            swatch.setStyleSheet(f"background: {self.item.color}; border-radius: 8px; border: 1px solid rgba(255, 255, 255, 0.2);")
+            swatch.setStyleSheet(f"background: {self.item.color}; border-radius: 8px; border: 1px solid #454950;")
             c_layout.addWidget(swatch)
 
             hex_row = self._create_info_row("HEX", self.item.color)
@@ -397,21 +397,21 @@ class EditorView(QMainWindow):
             if self.item.text:
                 lbl_ocr = QLabel(self.item.text[:200])
                 lbl_ocr.setWordWrap(True)
-                lbl_ocr.setStyleSheet("font-size: 11px; color: rgba(255, 255, 255, 0.7);")
+                lbl_ocr.setStyleSheet("font-size: 11px; color: #b9bbbd;")
                 o_layout.addWidget(lbl_ocr)
 
                 btn_copy_ocr = QPushButton("Copy Text")
-                btn_copy_ocr.setStyleSheet("background: rgba(255, 255, 255, 0.1); border-radius: 6px; padding: 4px; color: #ffffff;")
+                btn_copy_ocr.setStyleSheet("background: #2d333a; border-radius: 6px; padding: 4px; color: #ffffff;")
                 btn_copy_ocr.clicked.connect(lambda: Clipboard.write(self.item.text))
                 o_layout.addWidget(btn_copy_ocr)
             else:
                 btn_do_ocr = QPushButton("Recognize Text (OCR)")
-                btn_do_ocr.setStyleSheet("background: rgba(255, 255, 255, 0.1); border-radius: 6px; padding: 4px; color: #ffffff;")
+                btn_do_ocr.setStyleSheet("background: #2d333a; border-radius: 6px; padding: 4px; color: #ffffff;")
                 btn_do_ocr.clicked.connect(self._run_ocr)
                 o_layout.addWidget(btn_do_ocr)
 
             btn_save_img = QPushButton("Save Image…")
-            btn_save_img.setStyleSheet("background: rgba(255, 255, 255, 0.1); border-radius: 6px; padding: 4px; color: #ffffff;")
+            btn_save_img.setStyleSheet("background: #2d333a; border-radius: 6px; padding: 4px; color: #ffffff;")
             btn_save_img.clicked.connect(self._save_image_as)
             o_layout.addWidget(btn_save_img)
 
@@ -426,15 +426,15 @@ class EditorView(QMainWindow):
         frame.setObjectName("InspectorSection")
         frame.setProperty("sectionTitle", title.title())
         frame.setStyleSheet(
-            "QFrame#InspectorSection { background: rgba(255, 255, 255, 0.04);"
-            "border: 1px solid rgba(255, 255, 255, 0.08); border-radius: 10px; }"
+            "QFrame#InspectorSection { background: #1f252d;"
+            "border: 1px solid #292e36; border-radius: 10px; }"
         )
         return frame
 
     def _add_section(self, layout, frame: QFrame) -> None:
         """A section title above its rounded box, like the Mac inspector."""
         title = QLabel(frame.property("sectionTitle"))
-        title.setStyleSheet("color: rgba(255, 255, 255, 0.55); font-size: 11px; font-weight: 600; padding-left: 2px;")
+        title.setStyleSheet("color: #96999c; font-size: 11px; font-weight: 600; padding-left: 2px;")
         group = QVBoxLayout()
         group.setSpacing(6)
         group.addWidget(title)
@@ -444,7 +444,7 @@ class EditorView(QMainWindow):
     def _create_info_row(self, label: str, val: str) -> QHBoxLayout:
         row = QHBoxLayout()
         lbl = QLabel(label)
-        lbl.setStyleSheet("color: rgba(255, 255, 255, 0.5); font-size: 12px;")
+        lbl.setStyleSheet("color: #8a8e92; font-size: 12px;")
         val_lbl = QLabel(val)
         val_lbl.setStyleSheet("color: #ffffff; font-size: 12px; font-weight: 500;")
         val_lbl.setAlignment(Qt.AlignmentFlag.AlignRight)
@@ -481,7 +481,7 @@ class EditorView(QMainWindow):
             self.lbl_dirty.setStyleSheet("color: #f59f00; font-size: 12px; font-weight: 600;")
         else:
             self.lbl_dirty.setText("Edit the text, then press Save." if self.is_text else "")
-            self.lbl_dirty.setStyleSheet("color: rgba(255, 255, 255, 0.4); font-size: 12px;")
+            self.lbl_dirty.setStyleSheet("color: #73777c; font-size: 12px;")
         self.btn_cancel.setVisible(dirty)
         self.btn_save.setVisible(dirty)
         self.btn_done.setVisible(not dirty)

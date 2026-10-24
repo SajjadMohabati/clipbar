@@ -7,12 +7,12 @@
 <h1 align="center">ClipBar لینوکس | کلیپ‌بورد منیجر رایگانی که متن تایپ‌شده‌ات رو گم نمی‌کنه</h1>
 
 <p align="center">
-  <b>تاریخچه‌ی کلیپ‌بورد رایگان و متن‌باز برای اوبونتو، دبیان، فدورا و آرچ، با طراحی شیشه‌ای Liquid Glass</b><br>
+  <b>تاریخچه‌ی کلیپ‌بورد رایگان و متن‌باز برای اوبونتو، دبیان، فدورا و آرچ، با تم تیره‌ی تمیز و بومی</b><br>
   <b>Drafts: برگردوندن متنی که تایپ کردی و پرید</b> · آیتم‌های قفل‌دار رمزنگاری‌شده · اسکرین‌شات توی تاریخچه · جست‌وجوی متن داخل عکس · پیست فوری
 </p>
 
 <p align="center">
-  <a href="https://github.com/SajjadMohabati/clipbar/releases/tag/linux-v1.0"><img src="https://img.shields.io/badge/download-1.0-7c5cff" alt="دانلود کلیپ‌بار لینوکس ۱.۰"></a>
+  <a href="https://github.com/SajjadMohabati/clipbar/releases/tag/linux-v1.0.1"><img src="https://img.shields.io/badge/download-1.0.1-7c5cff" alt="دانلود کلیپ‌بار لینوکس ۱.۰.۱"></a>
   <img src="https://img.shields.io/badge/Ubuntu-24.04%2B-E95420?logo=ubuntu&logoColor=white" alt="اوبونتو ۲۴.۰۴ و جدیدتر">
   <img src="https://img.shields.io/badge/Debian-12%2B-A81D33?logo=debian&logoColor=white" alt="دبیان ۱۲ و جدیدتر">
   <img src="https://img.shields.io/badge/X11%20%2B%20Wayland-supported-555" alt="X11 و Wayland">
@@ -109,12 +109,12 @@
 
 ### اوبونتو و دبیان (پیشنهادی)
 
-فایل **`clipbar_1.0.0_all.deb`** رو از [صفحه‌ی آخرین نسخه‌ی لینوکس](https://github.com/SajjadMohabati/clipbar/releases/tag/linux-v1.0) دانلود کن و نصبش کن:
+فایل **`clipbar_1.0.1_all.deb`** رو از [صفحه‌ی آخرین نسخه‌ی لینوکس](https://github.com/SajjadMohabati/clipbar/releases/tag/linux-v1.0.1) دانلود کن و نصبش کن:
 
 <div dir="ltr">
 
 ```bash
-sudo apt install ./clipbar_1.0.0_all.deb
+sudo apt install ./clipbar_1.0.1_all.deb
 ```
 
 </div>
@@ -220,7 +220,7 @@ cd clipbar-linux && ./run-docker.sh
 <details>
 <summary><b>بهترین کلیپ‌بورد منیجر برای اوبونتو چیه؟</b></summary>
 
-کلیپ‌بار یه کلیپ‌بورد منیجر رایگان و متن‌باز برای اوبونتوئه، با تاریخچه، جست‌وجو، آیتم‌های پین‌شده و ذخیره‌شده، قفل رمزنگاری‌شده، اسکرین‌شات، OCR و Drafts که متن تایپ‌شده‌ی گم‌شده رو برمی‌گردونه. فایل `.deb` رو از [صفحه‌ی نسخه](https://github.com/SajjadMohabati/clipbar/releases/tag/linux-v1.0) نصب کن.
+کلیپ‌بار یه کلیپ‌بورد منیجر رایگان و متن‌باز برای اوبونتوئه، با تاریخچه، جست‌وجو، آیتم‌های پین‌شده و ذخیره‌شده، قفل رمزنگاری‌شده، اسکرین‌شات، OCR و Drafts که متن تایپ‌شده‌ی گم‌شده رو برمی‌گردونه. فایل `.deb` رو از [صفحه‌ی نسخه](https://github.com/SajjadMohabati/clipbar/releases/tag/linux-v1.0.1) نصب کن.
 </details>
 
 <details>

@@ -14,7 +14,7 @@ from clipbar.qt import (
 )
 from clipbar.settings import Settings, get_config_dir, get_data_dir
 from clipbar.store import ClipStore
-from clipbar.styles import LIQUID_GLASS_QSS, get_icon, switch_qss, tile_icon
+from clipbar.styles import CLIPBAR_QSS, get_icon, switch_qss, tile_icon
 
 
 def is_autostart_enabled() -> bool:
@@ -71,9 +71,9 @@ class SettingsView(QMainWindow):
 
         self.setWindowTitle("ClipBar Settings")
         self.resize(720, 520)
-        self.setStyleSheet(LIQUID_GLASS_QSS + switch_qss() + "QLabel { color: rgba(255, 255, 255, 0.85); }"
-            "QSpinBox, QComboBox { background: rgba(255, 255, 255, 0.08); color: #ffffff;"
-            " border: 1px solid rgba(255, 255, 255, 0.16); border-radius: 7px; padding: 4px 8px; min-width: 70px; }"
+        self.setStyleSheet(CLIPBAR_QSS + switch_qss() + "QLabel { color: #dcddde; }"
+            "QSpinBox, QComboBox { background: #292e36; color: #ffffff;"
+            " border: 1px solid #3b4047; border-radius: 7px; padding: 4px 8px; min-width: 70px; }"
             "QComboBox QAbstractItemView { background: #1e232c; color: #ffffff; selection-background-color: #0a84ff; }")
 
         self._init_ui()
@@ -90,7 +90,7 @@ class SettingsView(QMainWindow):
         sidebar.setFixedWidth(200)
         sidebar.setObjectName("SettingsSidebar")
         sidebar.setStyleSheet(
-            "QFrame#SettingsSidebar { background: rgba(22, 28, 36, 0.98); border-right: 1px solid rgba(255, 255, 255, 0.1); }"
+            "QFrame#SettingsSidebar { background: #161c24; border-right: 1px solid #2d333a; }"
         )
         sb_layout = QVBoxLayout(sidebar)
         sb_layout.setContentsMargins(10, 14, 10, 14)
@@ -99,9 +99,9 @@ class SettingsView(QMainWindow):
         self.nav_list = QListWidget()
         self.nav_list.setStyleSheet(
             "QListWidget { background: transparent; border: none; outline: none; }"
-            "QListWidget::item { padding: 8px 12px; border-radius: 8px; color: rgba(255, 255, 255, 0.7); font-size: 13px; font-weight: 500; }"
-            "QListWidget::item:hover { background: rgba(255, 255, 255, 0.08); color: #ffffff; }"
-            "QListWidget::item:selected { background: rgba(255, 255, 255, 0.16); color: #ffffff; font-weight: 600; }"
+            "QListWidget::item { padding: 8px 12px; border-radius: 8px; color: #b9bbbd; font-size: 13px; font-weight: 500; }"
+            "QListWidget::item:hover { background: #292e36; color: #ffffff; }"
+            "QListWidget::item:selected { background: #3b4047; color: #ffffff; font-weight: 600; }"
         )
 
         self.nav_list.setIconSize(QSize(22, 22))
@@ -115,7 +115,7 @@ class SettingsView(QMainWindow):
         self.content_stack = QStackedLayout()
         content_container = QWidget()
         content_container.setObjectName("SettingsContent")
-        content_container.setStyleSheet("QWidget#SettingsContent { background: rgba(18, 22, 30, 0.95); }")
+        content_container.setStyleSheet("QWidget#SettingsContent { background: #12161e; }")
         self.content_stack.setContentsMargins(28, 22, 28, 22)
         content_container.setLayout(self.content_stack)
 
@@ -156,11 +156,11 @@ class SettingsView(QMainWindow):
         # Shortcut
         s_box = QFrame()
         s_box.setObjectName("s_boxCard")
-        s_box.setStyleSheet("QFrame#s_boxCard { background: rgba(255, 255, 255, 0.05); border-radius: 8px; padding: 12px; }")
+        s_box.setStyleSheet("QFrame#s_boxCard { background: #22272f; border-radius: 8px; padding: 12px; }")
         sb_layout = QHBoxLayout(s_box)
         sb_layout.addWidget(QLabel("Global Shortcut:"))
         shortcut_input = QLineEdit(self.settings.shortcut)
-        shortcut_input.setStyleSheet("background: rgba(255, 255, 255, 0.1); border-radius: 6px; padding: 4px 8px; color: #ffffff;")
+        shortcut_input.setStyleSheet("background: #2d333a; border-radius: 6px; padding: 4px 8px; color: #ffffff;")
         shortcut_input.textChanged.connect(lambda t: setattr(self.settings, "shortcut", t))
         sb_layout.addWidget(shortcut_input)
         layout.addWidget(s_box)
@@ -183,7 +183,7 @@ class SettingsView(QMainWindow):
         # Status box
         status_box = QFrame()
         status_box.setObjectName("status_boxCard")
-        status_box.setStyleSheet("QFrame#status_boxCard { background: rgba(255, 255, 255, 0.05); border-radius: 8px; padding: 12px; }")
+        status_box.setStyleSheet("QFrame#status_boxCard { background: #22272f; border-radius: 8px; padding: 12px; }")
         st_layout = QVBoxLayout(status_box)
         can_paste = Clipboard.can_paste()
         st_title = QLabel("Permission / Paste Utility:" + (" ✓ Detected" if can_paste else " ⚠ Tool missing"))
@@ -192,7 +192,7 @@ class SettingsView(QMainWindow):
             "ClipBar simulates Ctrl+V to paste automatically into other apps.\n"
             + ("Ready on this system." if can_paste else "Install xdotool (for X11) or wtype/ydotool (for Wayland) to enable direct pasting.")
         )
-        st_desc.setStyleSheet("color: rgba(255, 255, 255, 0.6); font-size: 12px;")
+        st_desc.setStyleSheet("color: #a2a4a7; font-size: 12px;")
         st_layout.addWidget(st_title)
         st_layout.addWidget(st_desc)
         layout.addWidget(status_box)
@@ -212,14 +212,26 @@ class SettingsView(QMainWindow):
         chk_capture.toggled.connect(lambda c: setattr(self.settings, "capture_screenshots", c))
         layout.addWidget(chk_capture)
 
-        chk_copy = QCheckBox("Copy them to the clipboard")
+        # Linux-only safeguard against duplicate entries: the desktop already
+        # puts a screenshot in the system clipboard, so ClipBar re-copying it
+        # makes the same picture appear twice.  Off by default on Linux.
+        chk_copy = QCheckBox("Also copy screenshots to the clipboard")
         chk_copy.setChecked(self.settings.copy_screenshots)
+        chk_copy.setToolTip(
+            "On Linux the desktop usually copies a screenshot to the clipboard "
+            "as soon as you take it. Keep this off to avoid duplicates."
+        )
         chk_copy.toggled.connect(lambda c: setattr(self.settings, "copy_screenshots", c))
         layout.addWidget(chk_copy)
 
-        hint = QLabel("💡 Tip: ClipBar watches your default screenshot directory (~/Pictures/Screenshots) and runs on-device OCR so text in screenshots is searchable.")
+        hint = QLabel(
+            "💡 Tip: ClipBar watches your default screenshot directory "
+            "(~/Pictures/Screenshots) and runs on-device OCR so text in screenshots is searchable.\n"
+            "Linux already copies screenshots to the clipboard, so ClipBar only adds them "
+            "to your history once — no duplicates."
+        )
         hint.setWordWrap(True)
-        hint.setStyleSheet("color: rgba(255, 255, 255, 0.6); font-size: 12px; background: rgba(255, 255, 255, 0.05); border-radius: 8px; padding: 10px;")
+        hint.setStyleSheet("color: #a2a4a7; font-size: 12px; background: #22272f; border-radius: 8px; padding: 10px;")
         layout.addWidget(hint)
 
         layout.addStretch()
@@ -286,7 +298,7 @@ class SettingsView(QMainWindow):
 
         # Clear drafts button
         btn_clear_d = QPushButton("Clear Drafts")
-        btn_clear_d.setStyleSheet("background: rgba(224, 49, 49, 0.2); color: #ff6b6b; border-radius: 6px; padding: 6px 12px; max-width: 140px;")
+        btn_clear_d.setStyleSheet("background: #3e2027; color: #ff6b6b; border-radius: 6px; padding: 6px 12px; max-width: 140px;")
         btn_clear_d.clicked.connect(self.store.clear_drafts)
         layout.addWidget(btn_clear_d)
 
@@ -297,7 +309,7 @@ class SettingsView(QMainWindow):
             "Drafts stay entirely on this machine."
         )
         desc.setWordWrap(True)
-        desc.setStyleSheet("color: rgba(255, 255, 255, 0.55); font-size: 11px;")
+        desc.setStyleSheet("color: #96999c; font-size: 11px;")
         layout.addWidget(desc)
 
         layout.addStretch()
@@ -316,7 +328,7 @@ class SettingsView(QMainWindow):
         layout.addWidget(chk_sensitive)
 
         note = QLabel("🔒 Everything stays on this PC. No network requests, no telemetry, no cloud sync.")
-        note.setStyleSheet("color: rgba(255, 255, 255, 0.65); font-size: 12px; background: rgba(255, 255, 255, 0.05); border-radius: 8px; padding: 10px;")
+        note.setStyleSheet("color: #adb0b2; font-size: 12px; background: #22272f; border-radius: 8px; padding: 10px;")
         layout.addWidget(note)
 
         layout.addStretch()
@@ -360,7 +372,7 @@ class SettingsView(QMainWindow):
         layout.addWidget(chk_clean_pinned)
 
         btn_clear_h = QPushButton("Clear History…")
-        btn_clear_h.setStyleSheet("background: rgba(224, 49, 49, 0.2); color: #ff6b6b; border-radius: 6px; padding: 6px 12px; max-width: 140px;")
+        btn_clear_h.setStyleSheet("background: #3e2027; color: #ff6b6b; border-radius: 6px; padding: 6px 12px; max-width: 140px;")
         btn_clear_h.clicked.connect(lambda: self.store.clear(including_pinned=False))
         layout.addWidget(btn_clear_h)
 
@@ -382,21 +394,21 @@ class SettingsView(QMainWindow):
         title.setStyleSheet("font-size: 24px; font-weight: 700; color: #ffffff;")
         layout.addWidget(title)
 
-        ver = QLabel("Version 1.0 (Linux)")
-        ver.setStyleSheet("color: rgba(255, 255, 255, 0.5); font-size: 13px;")
+        ver = QLabel("Version 1.0.1 (Linux)")
+        ver.setStyleSheet("color: #8a8e92; font-size: 13px;")
         layout.addWidget(ver)
 
-        desc = QLabel("A fast, private clipboard history for Linux.\nBuilt with Liquid Glass design.")
+        desc = QLabel("A fast, private clipboard history for Linux.\nA clean dark theme built for Linux.")
         desc.setAlignment(Qt.AlignmentFlag.AlignCenter)
-        desc.setStyleSheet("color: rgba(255, 255, 255, 0.7); font-size: 13px;")
+        desc.setStyleSheet("color: #b9bbbd; font-size: 13px;")
         layout.addWidget(desc)
 
         author = QLabel("Created by Sajjad Mohabati · MIT License")
-        author.setStyleSheet("color: rgba(255, 255, 255, 0.4); font-size: 11px;")
+        author.setStyleSheet("color: #73777c; font-size: 11px;")
         layout.addWidget(author)
 
         btn_gh = QPushButton("View on GitHub")
-        btn_gh.setStyleSheet("background: rgba(255, 255, 255, 0.12); color: #ffffff; border-radius: 8px; padding: 6px 16px; font-weight: 600;")
+        btn_gh.setStyleSheet("background: #32373e; color: #ffffff; border-radius: 8px; padding: 6px 16px; font-weight: 600;")
         btn_gh.clicked.connect(lambda: subprocess.Popen(["xdg-open", "https://github.com/SajjadMohabati/clipbar"]))
         layout.addWidget(btn_gh)
 
@@ -419,7 +431,7 @@ class SettingsView(QMainWindow):
         t.setStyleSheet("font-size: 17px; font-weight: 700; color: #ffffff;")
         s = QLabel(subtitle)
         s.setWordWrap(True)
-        s.setStyleSheet("font-size: 12px; color: rgba(255, 255, 255, 0.55);")
+        s.setStyleSheet("font-size: 12px; color: #96999c;")
         text.addWidget(t)
         text.addWidget(s)
         row.addLayout(text, 1)

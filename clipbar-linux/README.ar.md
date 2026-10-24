@@ -7,12 +7,12 @@
 <h1 align="center">ClipBar لنظام لينكس | مدير الحافظة المجاني الذي لا يُضيع ما تكتبه</h1>
 
 <p align="center">
-  <b>سجل حافظة مجاني ومفتوح المصدر لأوبونتو وديبيان وفيدورا وآرتش، بتصميم زجاجي Liquid Glass</b><br>
+  <b>سجل حافظة مجاني ومفتوح المصدر لأوبونتو وديبيان وفيدورا وآرتش، بثيم داكن نظيف وأصلي</b><br>
   <b>Drafts: استرجاع النص الذي كتبته وفقدته</b> · عناصر مقفلة ومشفّرة · لقطات الشاشة في السجل · البحث في النص داخل الصور · لصق فوري
 </p>
 
 <p align="center">
-  <a href="https://github.com/SajjadMohabati/clipbar/releases/tag/linux-v1.0"><img src="https://img.shields.io/badge/download-1.0-7c5cff" alt="تنزيل ClipBar لنظام لينكس 1.0"></a>
+  <a href="https://github.com/SajjadMohabati/clipbar/releases/tag/linux-v1.0.1"><img src="https://img.shields.io/badge/download-1.0.1-7c5cff" alt="تنزيل ClipBar لنظام لينكس 1.0.1"></a>
   <img src="https://img.shields.io/badge/Ubuntu-24.04%2B-E95420?logo=ubuntu&logoColor=white" alt="أوبونتو 24.04 وأحدث">
   <img src="https://img.shields.io/badge/Debian-12%2B-A81D33?logo=debian&logoColor=white" alt="ديبيان 12 وأحدث">
   <img src="https://img.shields.io/badge/X11%20%2B%20Wayland-supported-555" alt="X11 وWayland">
@@ -109,12 +109,12 @@
 
 ### أوبونتو وديبيان (موصى به)
 
-نزّل الملف **`clipbar_1.0.0_all.deb`** من [صفحة أحدث إصدار للينكس](https://github.com/SajjadMohabati/clipbar/releases/tag/linux-v1.0) وثبّته:
+نزّل الملف **`clipbar_1.0.1_all.deb`** من [صفحة أحدث إصدار للينكس](https://github.com/SajjadMohabati/clipbar/releases/tag/linux-v1.0.1) وثبّته:
 
 <div dir="ltr">
 
 ```bash
-sudo apt install ./clipbar_1.0.0_all.deb
+sudo apt install ./clipbar_1.0.1_all.deb
 ```
 
 </div>
@@ -220,7 +220,7 @@ cd clipbar-linux && ./run-docker.sh
 <details>
 <summary><b>ما أفضل مدير حافظة لأوبونتو؟</b></summary>
 
-ClipBar مدير حافظة مجاني ومفتوح المصدر لأوبونتو، فيه السجل والبحث والعناصر المثبّتة والمحفوظة والقفل المشفّر ولقطات الشاشة والتعرف على النص، إضافة إلى Drafts التي تسترجع النص المكتوب المفقود. ثبّت حزمة `.deb` من [صفحة الإصدار](https://github.com/SajjadMohabati/clipbar/releases/tag/linux-v1.0).
+ClipBar مدير حافظة مجاني ومفتوح المصدر لأوبونتو، فيه السجل والبحث والعناصر المثبّتة والمحفوظة والقفل المشفّر ولقطات الشاشة والتعرف على النص، إضافة إلى Drafts التي تسترجع النص المكتوب المفقود. ثبّت حزمة `.deb` من [صفحة الإصدار](https://github.com/SajjadMohabati/clipbar/releases/tag/linux-v1.0.1).
 </details>
 
 <details>

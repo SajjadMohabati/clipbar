@@ -12,7 +12,7 @@
 <p align="center">
   <a href="https://github.com/SajjadMohabati/clipbar/releases/latest"><img src="https://img.shields.io/github/v/release/SajjadMohabati/clipbar?label=download&color=7c5cff" alt="Download the latest release"></a>
   <img src="https://img.shields.io/badge/macOS-26%20Tahoe-black?logo=apple" alt="macOS 26 Tahoe">
-  <a href="https://github.com/SajjadMohabati/clipbar/releases/tag/linux-v1.0"><img src="https://img.shields.io/badge/Linux-1.0-FCC624?logo=linux&logoColor=black" alt="ClipBar for Linux 1.0"></a>
+  <a href="https://github.com/SajjadMohabati/clipbar/releases/tag/linux-v1.0.1"><img src="https://img.shields.io/badge/Linux-1.0.1-FCC624?logo=linux&logoColor=black" alt="ClipBar for Linux 1.0.1"></a>
   <img src="https://img.shields.io/badge/Apple%20silicon%20%2B%20Intel-universal-555" alt="Universal binary">
   <img src="https://img.shields.io/badge/Swift-6-F05138?logo=swift&logoColor=white" alt="Swift 6">
   <a href="LICENSE"><img src="https://img.shields.io/github/license/SajjadMohabati/clipbar?color=2ea44f" alt="MIT license"></a>
@@ -91,12 +91,12 @@ app you were using**, while looking like it shipped with macOS Tahoe.
 - 🫧 **Real Liquid Glass.** A native SwiftUI interface made for macOS 26: glass panel, glass controls, smooth motion, light and dark mode.
 - 🛡 **Private by design.** No account, no cloud, no analytics and not a single network request. Everything stays on your Mac.
 - 🪶 **Tiny and dependency-free.** About 3,000 lines of Swift, zero third-party packages, a universal binary for Apple silicon and Intel. Version 2.4 frees memory as soon as each check finishes and caps its image caches, so it stays light all day.
-- 🐧 **On Linux too.** [ClipBar for Linux](#clipbar-for-linux) brings the same history, Drafts, Saved items and glass design to Ubuntu, Debian and other distributions.
+- 🐧 **On Linux too.** [ClipBar for Linux](#clipbar-for-linux) brings the same history, Drafts, Saved items and a clean dark theme to Ubuntu, Debian and other distributions.
 
 ## What's new
 
 - **2.4 (Mac):** lower memory use, and image thumbnails keep their real proportions instead of being squashed into a square.
-- **Linux 1.0:** the [first release of ClipBar for Linux](https://github.com/SajjadMohabati/clipbar/releases/tag/linux-v1.0), with a `.deb` package for Ubuntu and Debian.
+- **Linux 1.0.1:** fixes the Linux theme (opaque instead of glass), opens the panel straight from the tray icon, and stops screenshots and pastes from duplicating.
 - **2.3 (Mac):** [Drafts](#drafts-never-lose-what-you-typed-again), so you never lose what you typed.
 
 ## Features
@@ -153,7 +153,7 @@ app you were using**, while looking like it shipped with macOS Tahoe.
 ## ClipBar for Linux
 
 <p align="center">
-  <img src="docs/linux-panel.png" width="400" alt="ClipBar clipboard manager for Linux with Liquid Glass design on Ubuntu">
+  <img src="docs/linux-panel.png" width="400" alt="ClipBar clipboard manager for Linux with a clean dark theme on Ubuntu">
 </p>
 
 The same clipboard manager, built for the Linux desktop with Python and Qt 6. It has the same look,
@@ -170,11 +170,11 @@ the same tabs and the same keyboard-first workflow as the Mac app.
 | Direct paste | ✅ | ✅ xdotool, or wtype / ydotool on Wayland |
 | Open with | `⇧⌘V` | `Ctrl+Shift+V` |
 
-**Install on Ubuntu or Debian:** download `clipbar_1.0.0_all.deb` from the
-[Linux 1.0 release](https://github.com/SajjadMohabati/clipbar/releases/tag/linux-v1.0), then:
+**Install on Ubuntu or Debian:** download `clipbar_1.0.1_all.deb` from the
+[Linux 1.0.1 release](https://github.com/SajjadMohabati/clipbar/releases/tag/linux-v1.0.1), then:
 
 ```bash
-sudo apt install ./clipbar_1.0.0_all.deb
+sudo apt install ./clipbar_1.0.1_all.deb
 ```
 
 For Fedora, Arch, installing from source, Wayland setup and a Docker preview, see the
@@ -325,7 +325,7 @@ history. You can turn screenshot capture off in Settings → Screenshots.
 
 Yes. [ClipBar for Linux](#clipbar-for-linux) has the clipboard history, Drafts, Saved and locked
 items, screenshots and OCR. Install the `.deb` from the
-[Linux release](https://github.com/SajjadMohabati/clipbar/releases/tag/linux-v1.0) on Ubuntu
+[Linux release](https://github.com/SajjadMohabati/clipbar/releases/tag/linux-v1.0.1) on Ubuntu
 or Debian, or run it from source on other distributions.
 </details>
 

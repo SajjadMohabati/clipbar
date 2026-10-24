@@ -3,7 +3,7 @@
 set -euo pipefail
 cd "$(dirname "$0")/.."
 
-VERSION="1.0.0"
+VERSION="1.0.1"
 ARCH="all"
 PKG_NAME="clipbar_${VERSION}_${ARCH}"
 BUILD_DIR="dist/$PKG_NAME"
@@ -19,7 +19,7 @@ mkdir -p "$BUILD_DIR/usr/share/icons/hicolor/scalable/apps"
 # 1. DEBIAN/control
 cat << 'EOF' > "$BUILD_DIR/DEBIAN/control"
 Package: clipbar
-Version: 1.0.0
+Version: 1.0.1
 Section: utils
 Priority: optional
 Architecture: all
@@ -27,7 +27,7 @@ Depends: python3, python3-pyqt6, python3-pyqt6.qtsvg, python3-cryptography, xdot
 Recommends: tesseract-ocr, python3-pynput, python3-gi, gir1.2-atspi-2.0, at-spi2-core
 Maintainer: Sajjad Mohabati <https://github.com/SajjadMohabati>
 Description: Clipboard manager for Linux that never loses what you type
- A modern, elegant clipboard history with Liquid Glass design for Ubuntu,
+ A modern, elegant clipboard history with a clean dark theme for Ubuntu,
  Debian, Fedora and other Linux distributions.
  Features include:
   - Drafts autosave: never lose what you type in other apps

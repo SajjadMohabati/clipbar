@@ -16,7 +16,7 @@ if [ ! -f "$DATA_DIR/history.json" ]; then
 [
   {
     "id": "sample-1",
-    "text": "Welcome to ClipBar on Linux! 🚀\nUltra-lightweight clipboard manager with Liquid Glass design.",
+    "text": "Welcome to ClipBar on Linux! 🚀\nUltra-lightweight clipboard manager with a clean dark theme.",
     "pinned": true,
     "uses": 5,
     "date": "2026-10-23T01:00:00"

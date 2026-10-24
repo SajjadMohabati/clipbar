@@ -221,6 +221,10 @@ class ClipStore:
 
         self._listeners: List[Callable[[], None]] = []
         self._last_content_hash: Optional[str] = None
+        # When the system clipboard last carried an image.  Used by the
+        # screenshot watcher to avoid recording the same screenshot twice
+        # (Linux desktops auto-copy screenshots to the clipboard).
+        self._last_image_clip_ts: float = 0.0
         self._io_lock = threading.Lock()
 
     def add_listener(self, cb: Callable[[], None]) -> None:
@@ -290,6 +294,9 @@ class ClipStore:
                 if not (settings.skip_sensitive and Clipboard.looks_sensitive(trimmed)):
                     self.insert(ClipItem(text=text, source=source))
         elif image_data and len(image_data) <= self.MAX_IMAGE_BYTES:
+            # Record when an image arrived on the clipboard so the screenshot
+            # watcher can detect "the desktop already copied this screenshot".
+            self._last_image_clip_ts = time.time()
             self.capture_image(image_data, is_png=True, source=source)
 
     def add_screenshot(self, path: Path, copy_to_clipboard: bool = True) -> None:
@@ -298,8 +305,18 @@ class ClipStore:
         try:
             with open(path, "rb") as f:
                 data = f.read()
+            mtime = path.stat().st_mtime
         except Exception:
             return
+
+        # Duplicate guard (Linux).  GNOME/KDE copy a screenshot to the system
+        # clipboard at the instant it is saved, so the clipboard monitor has
+        # already recorded it.  If an image was captured on the clipboard when
+        # this file was created, that image is this screenshot — skip adding it
+        # again so one screenshot produces exactly one history entry.
+        if mtime and self._last_image_clip_ts and abs(mtime - self._last_image_clip_ts) < 2.5:
+            return
+
         is_png = path.suffix.lower() == ".png"
         if copy_to_clipboard:
             try:

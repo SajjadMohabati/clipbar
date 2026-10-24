@@ -5,12 +5,12 @@
 <h1 align="center">ClipBar for Linux: Clipboard Manager That Never Loses What You Type</h1>
 
 <p align="center">
-  <b>A free, open-source clipboard history manager for Ubuntu, Debian, Fedora and Arch, with a Liquid Glass design.</b><br>
+  <b>A free, open-source clipboard history manager for Ubuntu, Debian, Fedora and Arch, with a clean native dark theme.</b><br>
   <b>Drafts: recover text you typed and lost</b> · encrypted locked items · screenshots in your history · OCR search · instant paste
 </p>
 
 <p align="center">
-  <a href="https://github.com/SajjadMohabati/clipbar/releases/tag/linux-v1.0"><img src="https://img.shields.io/badge/download-1.0-7c5cff" alt="Download ClipBar for Linux 1.0"></a>
+  <a href="https://github.com/SajjadMohabati/clipbar/releases/tag/linux-v1.0.1"><img src="https://img.shields.io/badge/download-1.0.1-7c5cff" alt="Download ClipBar for Linux 1.0.1"></a>
   <img src="https://img.shields.io/badge/Ubuntu-24.04%2B-E95420?logo=ubuntu&logoColor=white" alt="Ubuntu 24.04 and newer">
   <img src="https://img.shields.io/badge/Debian-12%2B-A81D33?logo=debian&logoColor=white" alt="Debian 12 and newer">
   <img src="https://img.shields.io/badge/X11%20%2B%20Wayland-supported-555" alt="X11 and Wayland">
@@ -104,11 +104,11 @@ accessibility, even if you never copied it. Open ClipBar, go to the **Drafts** t
 
 ### Ubuntu and Debian (recommended)
 
-Download **`clipbar_1.0.0_all.deb`** from the
-[latest Linux release](https://github.com/SajjadMohabati/clipbar/releases/tag/linux-v1.0) and install it:
+Download **`clipbar_1.0.1_all.deb`** from the
+[latest Linux release](https://github.com/SajjadMohabati/clipbar/releases/tag/linux-v1.0.1) and install it:
 
 ```bash
-sudo apt install ./clipbar_1.0.0_all.deb
+sudo apt install ./clipbar_1.0.1_all.deb
 ```
 
 For Drafts, also install the accessibility packages:
@@ -195,7 +195,7 @@ From a terminal: `clipbar --toggle` opens or closes the panel, `clipbar --settin
 
 ClipBar is a free, open-source clipboard manager for Ubuntu with history, search, pinned and saved
 items, encrypted locked items, screenshots, OCR and Drafts, which recovers text you typed and lost.
-Install the `.deb` from the [release page](https://github.com/SajjadMohabati/clipbar/releases/tag/linux-v1.0).
+Install the `.deb` from the [release page](https://github.com/SajjadMohabati/clipbar/releases/tag/linux-v1.0.1).
 </details>
 
 <details>

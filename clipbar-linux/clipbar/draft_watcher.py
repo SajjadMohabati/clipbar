@@ -38,6 +38,11 @@ class DraftWatcher:
     MAX_LENGTH = 20_000
     # How long a slow or hung app may take to answer, in milliseconds.
     TIMEOUT_MS = 250
+    # Text that grows by more than this many characters in a single 1-second
+    # check was pasted (or autofilled), not typed: even a very fast typist adds
+    # far less per second.  Drafts must only hold what the user actually typed,
+    # so a jump this big is treated as a paste and skipped.
+    PASTE_JUMP = 32
     # Terminals expose their whole scrollback as text; password managers are private.
     SKIPPED_APPS: Set[str] = {
         "terminal", "konsole", "alacritty", "kitty", "foot", "wezterm", "xterm", "urxvt",
@@ -153,7 +158,16 @@ class DraftWatcher:
             return
         if text == self._last:
             return
+        previous = self._last
         self._last = text
+
+        # Drafts are for what you type, not what you copy/paste.  A paste lands
+        # in the field as one big jump, so skip it and restart the session so it
+        # can't leak into the next draft either.
+        if len(text) - len(previous) > self.PASTE_JUMP:
+            self._draft = None
+            self._peak = len(text)
+            return
 
         # Sent, cleared or wiped: the draft keeps the full text, and what follows is a new one.
         if len(text) * 2 < self._peak:

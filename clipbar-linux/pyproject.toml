@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "clipbar"
-version = "1.0.0"
+version = "1.0.1"
 description = "Clipboard manager for Linux that never loses what you type"
 readme = "README.md"
 authors = [{ name = "Sajjad Mohabati" }]

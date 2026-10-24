@@ -106,7 +106,13 @@ class ClipBarApp:
         self.act_quit = self.tray_menu.addAction("Quit ClipBar")
         self.act_quit.triggered.connect(self.quit)
 
-        self.tray.setContextMenu(self.tray_menu)
+        # IMPORTANT: do NOT call setContextMenu here.  On Linux a tray icon that
+        # has a context menu shows that menu on a plain left-click (the desktop
+        # never emits the "Trigger" activation), which forced users to click an
+        # extra "Open ClipBar" item.  Leaving the menu unset makes a left-click
+        # arrive as ActivationReason.Trigger so the panel opens directly, while
+        # right-click arrives as ActivationReason.Context and we pop the same
+        # menu ourselves (see _on_tray_activated).
         self.tray.activated.connect(self._on_tray_activated)
         self.tray.show()
 
@@ -120,8 +126,12 @@ class ClipBarApp:
         )
 
     def _on_tray_activated(self, reason: QSystemTrayIcon.ActivationReason) -> None:
+        # Left-click opens the clipboard panel directly.  Right-click shows the
+        # tray menu (Settings, Quit, ...) since no context menu is attached.
         if reason == QSystemTrayIcon.ActivationReason.Trigger:
             self.toggle_panel()
+        elif reason == QSystemTrayIcon.ActivationReason.Context:
+            self.tray_menu.popup(QCursor.pos())
 
     def toggle_panel(self) -> None:
         if self.panel and self.panel.isVisible():

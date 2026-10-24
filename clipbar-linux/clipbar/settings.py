@@ -52,7 +52,11 @@ class Settings:
         "autoPaste": True,
         "skipSensitive": True,
         "captureScreenshots": True,
-        "copyScreenshots": True,
+        # Linux desktops (GNOME/KDE) already copy a screenshot to the system
+        # clipboard the moment it is taken.  ClipBar re-copying it would double
+        # the entry, so "copyScreenshots" is OFF by default on Linux.  Keep it
+        # as a user-facing toggle for people whose screenshot tool does not.
+        "copyScreenshots": False,
         "draftsEnabled": False,
         "draftMinLength": 30,
         "draftHours": 12,

@@ -17,7 +17,7 @@ from clipbar.qt import (
 )
 from clipbar.settings import Settings
 from clipbar.store import ClipItem, ClipStore, Filter
-from clipbar.styles import LIQUID_GLASS_QSS, get_icon
+from clipbar.styles import CLIPBAR_QSS, get_icon
 
 
 def format_relative_time(dt: datetime) -> str:
@@ -187,7 +187,7 @@ class ClipRowWidget(QFrame):
             self.lbl_title.setStyleSheet("font-size: 13px; font-weight: 600; color: #ffffff;")
             self.lbl_preview = ElidedLabel(item.preview)
             self.lbl_preview.setStyleSheet(
-                "font-size: 11px; color: rgba(255, 255, 255, 0.55);"
+                "font-size: 11px; color: #96999c;"
                 + ("font-family: monospace;" if item.is_locked else "")
             )
             text_layout.addWidget(self.lbl_title)
@@ -204,7 +204,7 @@ class ClipRowWidget(QFrame):
                 meta_parts.append(f"{item.uses}×")
 
             self.lbl_meta = ElidedLabel(" · ".join(meta_parts))
-            self.lbl_meta.setStyleSheet("font-size: 11px; color: rgba(255, 255, 255, 0.55);")
+            self.lbl_meta.setStyleSheet("font-size: 11px; color: #96999c;")
             text_layout.addWidget(self.lbl_preview)
             text_layout.addWidget(self.lbl_meta)
 
@@ -370,7 +370,7 @@ class SavedItemDialog(QDialog):
         self.on_add = on_add
         self.setWindowTitle("New Saved Item")
         self.setFixedSize(300, 240)
-        self.setStyleSheet(LIQUID_GLASS_QSS)
+        self.setStyleSheet(CLIPBAR_QSS)
 
         layout = QVBoxLayout(self)
         layout.setContentsMargins(16, 16, 16, 16)
@@ -383,7 +383,7 @@ class SavedItemDialog(QDialog):
         self.title_input = QLineEdit()
         self.title_input.setPlaceholderText("Title, e.g. Bank name")
         self.title_input.setStyleSheet(
-            "background: rgba(255, 255, 255, 0.1); border: 1px solid rgba(255, 255, 255, 0.2);"
+            "background: #2d333a; border: 1px solid #454950;"
             "border-radius: 8px; padding: 6px; color: #ffffff;"
         )
         layout.addWidget(self.title_input)
@@ -391,14 +391,14 @@ class SavedItemDialog(QDialog):
         self.val_input = QLineEdit()
         self.val_input.setPlaceholderText("Value to paste")
         self.val_input.setStyleSheet(
-            "background: rgba(255, 255, 255, 0.1); border: 1px solid rgba(255, 255, 255, 0.2);"
+            "background: #2d333a; border: 1px solid #454950;"
             "border-radius: 8px; padding: 6px; color: #ffffff;"
         )
         layout.addWidget(self.val_input)
 
         from clipbar.qt import QCheckBox
         self.lock_check = QCheckBox("Lock with password")
-        self.lock_check.setStyleSheet("color: rgba(255, 255, 255, 0.85); font-size: 12px;")
+        self.lock_check.setStyleSheet("color: #dcddde; font-size: 12px;")
         layout.addWidget(self.lock_check)
 
         btn_box = QHBoxLayout()
@@ -411,7 +411,7 @@ class SavedItemDialog(QDialog):
         add_btn = QPushButton("Add")
         add_btn.setDefault(True)
         add_btn.setStyleSheet(
-            "background: rgba(255, 255, 255, 0.22); color: #ffffff; border: 1px solid rgba(255, 255, 255, 0.3);"
+            "background: #494e54; color: #ffffff; border: 1px solid #5c6066;"
             "border-radius: 10px; padding: 5px 14px; font-weight: 600;"
         )
 
@@ -435,7 +435,7 @@ class RenameDialog(QDialog):
         self.on_save = on_save
         self.setWindowTitle("Title")
         self.setFixedSize(260, 140)
-        self.setStyleSheet(LIQUID_GLASS_QSS)
+        self.setStyleSheet(CLIPBAR_QSS)
 
         layout = QVBoxLayout(self)
         layout.setContentsMargins(16, 16, 16, 16)
@@ -448,7 +448,7 @@ class RenameDialog(QDialog):
         self.title_input = QLineEdit(current_title)
         self.title_input.setPlaceholderText("e.g. Bank name")
         self.title_input.setStyleSheet(
-            "background: rgba(255, 255, 255, 0.1); border: 1px solid rgba(255, 255, 255, 0.2);"
+            "background: #2d333a; border: 1px solid #454950;"
             "border-radius: 8px; padding: 6px; color: #ffffff;"
         )
         layout.addWidget(self.title_input)
@@ -459,7 +459,7 @@ class RenameDialog(QDialog):
         save_btn = QPushButton("Save")
         save_btn.setDefault(True)
         save_btn.setStyleSheet(
-            "background: rgba(255, 255, 255, 0.22); color: #ffffff; border: 1px solid rgba(255, 255, 255, 0.3);"
+            "background: #494e54; color: #ffffff; border: 1px solid #5c6066;"
             "border-radius: 10px; padding: 5px 14px; font-weight: 600;"
         )
         save_btn.clicked.connect(lambda: (self.on_save(self.title_input.text().strip()), self.accept()))
@@ -474,7 +474,7 @@ class ShortcutsDialog(QDialog):
         super().__init__(parent)
         self.setWindowTitle("ClipBar Shortcuts")
         self.setFixedSize(320, 390)
-        self.setStyleSheet(LIQUID_GLASS_QSS)
+        self.setStyleSheet(CLIPBAR_QSS)
 
         layout = QVBoxLayout(self)
         layout.setContentsMargins(18, 18, 18, 18)
@@ -512,7 +512,7 @@ class ShortcutsDialog(QDialog):
             grid.addWidget(key_lbl, i, 0, Qt.AlignmentFlag.AlignRight)
 
             desc_lbl = QLabel(desc)
-            desc_lbl.setStyleSheet("font-size: 12px; color: rgba(255, 255, 255, 0.85);")
+            desc_lbl.setStyleSheet("font-size: 12px; color: #dcddde;")
             grid.addWidget(desc_lbl, i, 1)
 
         layout.addLayout(grid)
@@ -520,7 +520,7 @@ class ShortcutsDialog(QDialog):
 
 
 class ClipView(QWidget):
-    """Main panel window matching ClipView.swift with Liquid Glass UI."""
+    """Main floating panel window matching ClipView.swift (opaque Linux theme)."""
 
     MARGIN = 14
     PANEL_WIDTH = 400
@@ -551,6 +551,9 @@ class ClipView(QWidget):
             Qt.WindowType.FramelessWindowHint
             | Qt.WindowType.WindowStaysOnTopHint
         )
+        # Transparent margins keep the rounded floating-card silhouette.  The
+        # card itself is opaque now (see styles.py THEME NOTE) — we no longer
+        # rely on rgba translucency, only on this margin staying transparent.
         self.setAttribute(Qt.WidgetAttribute.WA_TranslucentBackground, True)
         self.setFixedSize(self.PANEL_WIDTH + self.MARGIN * 2, self.PANEL_HEIGHT + self.MARGIN * 2)
 
@@ -563,7 +566,7 @@ class ClipView(QWidget):
 
         self.container = QFrame()
         self.container.setObjectName("PanelContainer")
-        self.container.setStyleSheet(LIQUID_GLASS_QSS)
+        self.container.setStyleSheet(CLIPBAR_QSS)
 
         panel_layout = QVBoxLayout(self.container)
         panel_layout.setContentsMargins(12, 12, 12, 12)
@@ -648,7 +651,7 @@ class ClipView(QWidget):
         search_box.setSpacing(7)
 
         search_icon = QLabel()
-        search_icon.setPixmap(get_icon("search", "rgba(255, 255, 255, 0.5)").pixmap(14, 14))
+        search_icon.setPixmap(get_icon("search", "#8a8e92").pixmap(14, 14))
         search_box.addWidget(search_icon)
 
         self.search_input = QLineEdit()
@@ -659,7 +662,7 @@ class ClipView(QWidget):
 
         self.btn_clear_search = QPushButton()
         self.btn_clear_search.setProperty("class", "GlassIconButton")
-        self.btn_clear_search.setIcon(get_icon("close", "rgba(255, 255, 255, 0.5)"))
+        self.btn_clear_search.setIcon(get_icon("close", "#8a8e92"))
         self.btn_clear_search.setFixedSize(18, 18)
         self.btn_clear_search.clicked.connect(lambda: self.search_input.setText(""))
         self.btn_clear_search.setVisible(False)
@@ -705,7 +708,7 @@ class ClipView(QWidget):
         # 5. Access Banner (if paste permission / utility is missing)
         self.banner_frame = QFrame()
         self.banner_frame.setStyleSheet(
-            "background: rgba(245, 159, 0, 0.15); border-radius: 10px; padding: 6px 10px;"
+            "background: #37301f; border-radius: 10px; padding: 6px 10px;"
         )
         banner_layout = QHBoxLayout(self.banner_frame)
         banner_layout.setContentsMargins(6, 6, 6, 6)
@@ -878,7 +881,7 @@ class ClipView(QWidget):
                 self.footer_status.setText(f"{total} draft" if total == 1 else f"{total} drafts")
             else:
                 self.footer_status.setText(f"{total} item" if total == 1 else f"{total} items")
-            self.footer_status.setStyleSheet("color: rgba(255, 255, 255, 0.45); font-size: 11px; font-weight: 500;")
+            self.footer_status.setStyleSheet("color: #7f8287; font-size: 11px; font-weight: 500;")
 
         self.paste_label.setText("Paste" if settings.auto_paste else "Copy")
 
@@ -896,7 +899,7 @@ class ClipView(QWidget):
         if not items:
             empty_lbl = QLabel()
             empty_lbl.setAlignment(Qt.AlignmentFlag.AlignCenter)
-            empty_lbl.setStyleSheet("color: rgba(255, 255, 255, 0.45); font-size: 13px; padding-top: 60px;")
+            empty_lbl.setStyleSheet("color: #7f8287; font-size: 13px; padding-top: 60px;")
             if self.store.query:
                 empty_lbl.setText(f"No matches for “{self.store.query}”")
             elif self.store.mode == "saved":
@@ -946,7 +949,7 @@ class ClipView(QWidget):
         if len(items) > MAX_ITEMS:
             more_lbl = QLabel(f"… and {len(items) - MAX_ITEMS} more items. Type in search to find anything.")
             more_lbl.setAlignment(Qt.AlignmentFlag.AlignCenter)
-            more_lbl.setStyleSheet("color: rgba(255, 255, 255, 0.35); font-size: 11px; padding: 10px;")
+            more_lbl.setStyleSheet("color: #686b71; font-size: 11px; padding: 10px;")
             self.list_layout.insertWidget(self.list_layout.count() - 1, more_lbl)
 
     # MARK: - Key Events
