@@ -13,17 +13,22 @@ APP="./ClipBar.app"
 rm -rf "$APP"
 mkdir -p "$APP/Contents/MacOS" "$APP/Contents/Resources"
 
+SWIFT_FLAGS=()
+if [ -d "/Library/Developer/CommandLineTools/SDKs/MacOSX26.5.sdk" ]; then
+    SWIFT_FLAGS+=(--sdk /Library/Developer/CommandLineTools/SDKs/MacOSX26.5.sdk)
+fi
+
 if [[ "${1:-}" == "dmg" ]]; then
     # The installer runs on any Mac, so it gets one binary for Apple silicon and Intel.
     BINARIES=()
     for ARCH in arm64 x86_64; do
-        swift build -c release --triple "$ARCH-apple-macosx26.0"
-        BINARIES+=("$(swift build -c release --triple "$ARCH-apple-macosx26.0" --show-bin-path)/ClipBar")
+        swift build -c release "${SWIFT_FLAGS[@]}" --triple "$ARCH-apple-macosx26.0" --scratch-path ".build/scratch-$ARCH"
+        BINARIES+=("$(swift build -c release "${SWIFT_FLAGS[@]}" --triple "$ARCH-apple-macosx26.0" --scratch-path ".build/scratch-$ARCH" --show-bin-path)/ClipBar")
     done
     lipo -create "${BINARIES[@]}" -output "$APP/Contents/MacOS/ClipBar"
 else
-    swift build -c release
-    cp "$(swift build -c release --show-bin-path)/ClipBar" "$APP/Contents/MacOS/ClipBar"
+    swift build -c release "${SWIFT_FLAGS[@]}"
+    cp "$(swift build -c release "${SWIFT_FLAGS[@]}" --show-bin-path)/ClipBar" "$APP/Contents/MacOS/ClipBar"
 fi
 cp Resources/Info.plist "$APP/Contents/Info.plist"
 cp Resources/AppIcon.icns "$APP/Contents/Resources/AppIcon.icns"
